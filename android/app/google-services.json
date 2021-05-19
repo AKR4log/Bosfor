@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "282639646735",
+    "project_id": "bosfor-f14d9",
+    "storage_bucket": "bosfor-f14d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282639646735:android:ec08bfa3300ed878fb637a",
+        "android_client_info": {
+          "package_name": "com.bosfor.kz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282639646735-h4pfbgmqjqgnrb0hldj6b9n93bqi4n1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAb1QI8UjOr0Q15HDIplMvjm5zV6KiYvzo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282639646735-h4pfbgmqjqgnrb0hldj6b9n93bqi4n1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
