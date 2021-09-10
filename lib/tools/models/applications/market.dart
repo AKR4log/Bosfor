@@ -12,7 +12,17 @@ class MarketApplication {
   // ignore: non_constant_identifier_names
   final bool m_exchange;
   // ignore: non_constant_identifier_names
-  final String m_photo;
+  final String m_photo_1;
+  // ignore: non_constant_identifier_names
+  final String m_photo_2;
+  // ignore: non_constant_identifier_names
+  final String m_photo_3;
+  // ignore: non_constant_identifier_names
+  final String m_photo_4;
+  // ignore: non_constant_identifier_names
+  final String m_photo_5;
+  // ignore: non_constant_identifier_names
+  final String m_youtube;
   // ignore: non_constant_identifier_names
   final String m_region;
   // ignore: non_constant_identifier_names
@@ -56,7 +66,12 @@ class MarketApplication {
       // ignore: non_constant_identifier_names
       this.m_phone,
       // ignore: non_constant_identifier_names
-      this.m_photo,
+      this.m_photo_1,
+      this.m_photo_2, // ignore: non_constant_identifier_names
+      this.m_photo_3, // ignore: non_constant_identifier_names
+      this.m_photo_4, // ignore: non_constant_identifier_names
+      this.m_photo_5, // ignore: non_constant_identifier_names
+      this.m_youtube, // ignore: non_constant_identifier_names
       // ignore: non_constant_identifier_names
       this.m_price,
       // ignore: non_constant_identifier_names
@@ -77,4 +92,52 @@ class MarketApplication {
       this.m_latitude,
       // ignore: non_constant_identifier_names
       this.m_longitude});
+
+  // Заголовок
+  // Категория
+  // Подкатегория
+  // Малая категория
+  // Цена
+  // Договорная цена - bool
+  // Отдам даром - bool
+  // Описание
+  // Обмен - bool
+  // Фотографии
+  // Регион
+  // Телефон
+  // Телефон - bool
+  // Адрес
+  // Эл. почта
+  // Возможен выезд - bool - Услуги
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  //
+  // UID USER
+  // UID APPLICATION
+  // COLOR
+  //
+  //
+
 }

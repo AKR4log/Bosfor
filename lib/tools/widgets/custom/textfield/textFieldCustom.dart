@@ -30,13 +30,13 @@ Widget textFieldPhone(
               ),
             )
           : error
-          ? Center(
-              child: Icon(
-                Icons.error_outline_rounded,
-                color: Color.fromRGBO(255, 89, 100, 1),
-              ),
-            )
-          : SizedBox(),
+              ? Center(
+                  child: Icon(
+                    Icons.error_outline_rounded,
+                    color: Color.fromRGBO(255, 89, 100, 1),
+                  ),
+                )
+              : SizedBox(),
       border: OutlineInputBorder(
         borderSide: BorderSide.none,
         borderRadius: BorderRadius.circular(10.0),
@@ -101,8 +101,8 @@ Widget textField(
                 color: colorTransparent
                     ? Colors.transparent
                     : error
-                    ? Color.fromRGBO(255, 89, 100, 0.7)
-                    : Color.fromRGBO(190, 190, 190, 0.7),
+                        ? Color.fromRGBO(255, 89, 100, 0.7)
+                        : Color.fromRGBO(190, 190, 190, 0.7),
               ),
       ),
       focusedBorder: UnderlineInputBorder(
@@ -113,8 +113,8 @@ Widget textField(
                 color: colorTransparent
                     ? Colors.transparent
                     : error
-                    ? Color.fromRGBO(255, 89, 100, 1)
-                    : Color.fromRGBO(190, 190, 190, 1),
+                        ? Color.fromRGBO(255, 89, 100, 1)
+                        : Color.fromRGBO(190, 190, 190, 1),
               ),
       ),
       border: UnderlineInputBorder(
@@ -125,8 +125,8 @@ Widget textField(
                 color: colorTransparent
                     ? Colors.transparent
                     : error
-                    ? Color.fromRGBO(255, 89, 100, 0.7)
-                    : Color.fromRGBO(190, 190, 190, 0.7),
+                        ? Color.fromRGBO(255, 89, 100, 0.7)
+                        : Color.fromRGBO(190, 190, 190, 0.7),
               ),
       ),
       isCollapsed: true,
@@ -313,6 +313,7 @@ Widget textFieldtwo(TextEditingController controller, bool error, String hint,
     bool isText = false,
     Color color,
     bool enable = true,
+    Function onChanged,
     bool isEmail = false}) {
   return TextField(
     controller: controller,
@@ -327,8 +328,8 @@ Widget textFieldtwo(TextEditingController controller, bool error, String hint,
       fillColor: error
           ? Color.fromRGBO(255, 89, 100, 0.1)
           : color != null
-          ? color
-          : Color.fromRGBO(247, 247, 249, 1),
+              ? color
+              : Color.fromRGBO(247, 247, 249, 1),
       hintText: hint,
       contentPadding: EdgeInsets.symmetric(vertical: 13, horizontal: 10),
     ),
@@ -344,39 +345,38 @@ Widget textFieldtwo(TextEditingController controller, bool error, String hint,
     keyboardType: isEmail
         ? TextInputType.emailAddress
         : isText
-        ? TextInputType.text
-        : TextInputType.number,
+            ? TextInputType.text
+            : TextInputType.number,
+    onChanged: (value) {
+      onChanged();
+    },
   );
 }
 
 Widget textFieldPhones(
-  BuildContext context,
-  TextEditingController controller,
-  bool error,
-) {
+    BuildContext context, TextEditingController controller, bool error,
+    {Function onChanged()}) {
   return TextField(
     controller: controller,
     decoration: InputDecoration(
-      prefixIconConstraints: BoxConstraints(maxHeight: 35, maxWidth: 45),
-      prefixIcon: error
-          ? Center(
-              child: Icon(
-                Icons.error_outline_rounded,
-                color: Color.fromRGBO(255, 89, 100, 1),
-              ),
-            )
-          : SizedBox(),
+      prefixIconConstraints: BoxConstraints(maxHeight: 25, maxWidth: 50),
+      prefixIcon: Center(
+        child: Icon(
+          Icons.smartphone_rounded,
+          color: error
+              ? Color.fromRGBO(255, 89, 100, 1)
+              : Color.fromRGBO(143, 161, 180, 1),
+        ),
+      ),
       border: OutlineInputBorder(
         borderSide: BorderSide.none,
         borderRadius: BorderRadius.circular(10.0),
       ),
       isCollapsed: true,
       filled: true,
-      fillColor: error
-          ? Color.fromRGBO(255, 89, 100, 0.1)
-          : Color.fromRGBO(247, 247, 249, 1),
+      fillColor: Color.fromRGBO(247, 247, 249, 1),
       hintText: AppLocalizations.of(context).translate('enter_phone'),
-      contentPadding: EdgeInsets.symmetric(vertical: 5),
+      contentPadding: EdgeInsets.symmetric(vertical: 10),
     ),
     textInputAction: TextInputAction.next,
     inputFormatters: [
@@ -388,9 +388,16 @@ Widget textFieldPhones(
     style: TextStyle(
       color: error
           ? Color.fromRGBO(255, 89, 100, 1)
-          : Color.fromRGBO(13, 2, 33, 1),
+          : Color.fromRGBO(143, 161, 180, 1),
       fontSize: 16,
     ),
+    onChanged: (String value) {
+      try {
+        if (value.length == 17) {
+          onChanged();
+        }
+      } catch (e) {}
+    },
     textAlign: TextAlign.start,
     keyboardType: TextInputType.phone,
   );

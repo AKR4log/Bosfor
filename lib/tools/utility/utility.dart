@@ -20,11 +20,30 @@ String getChatTime(BuildContext context, String date) {
     msg =
         DateFormat.E(myLocale.toString()).add_jm().add_d().add_MMM().format(dt);
   } else if (dur.inDays > 0) {
-    msg = DateFormat.E(myLocale.toString()).add_jm().format(dt);
+    if (dur.inDays == 1) {
+      msg = 'день назад';
+    } else if (dur.inDays == 2) {
+      msg = '${dur.inDays} дня назад';
+    } else if (dur.inDays == 3) {
+      msg = '${dur.inDays} дня назад';
+    } else if (dur.inDays == 4) {
+      msg = '${dur.inDays} дня назад';
+    } else if (dur.inDays == 5) {
+      msg = '${dur.inDays} дней назад';
+    } else if (dur.inDays == 6) {
+      msg = '${dur.inDays} дней назад';
+    }
+    // msg = DateFormat.E(myLocale.toString()).add_jm().format(dt);
   } else if (dur.inHours > 0) {
-    msg = DateFormat.jm(myLocale.toString()).add_d().add_MMM().format(dt);
+    // msg = DateFormat.jm(myLocale.toString()).add_d().add_MMM().format(dt);
+    if (dur.inHours == 1) {
+      msg = 'час назад';
+    } else {
+      msg = '${dur.inHours} час назад';
+    }
   } else if (dur.inMinutes > 0) {
-    msg = DateFormat.jm(myLocale.toString()).format(dt);
+    // msg = DateFormat.j(myLocale.toString()).format(dt);
+    msg = '${dur.inMinutes} мин назад';
   } else if (dur.inSeconds > 0) {
     msg = '${dur.inSeconds} s';
   } else {
@@ -45,4 +64,11 @@ String getTimeMessage(BuildContext context, String date) {
   }
 
   return DateFormat.jm(myLocale.toString()).format(dt);
+}
+
+class ScreenArguments {
+  final String title;
+  final String message;
+
+  ScreenArguments(this.title, this.message);
 }

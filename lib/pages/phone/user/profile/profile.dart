@@ -9,6 +9,7 @@ import 'package:kz/pages/phone/user/profile/myPostList.dart';
 import 'package:kz/tools/models/applications/applications.dart';
 import 'package:kz/tools/models/user/user.dart';
 import 'package:kz/tools/state/feed_state.dart';
+import 'package:kz/tools/widgets/supporting/plug.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -320,48 +321,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(
-                            vertical: 15,
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: double.infinity,
-                                margin: EdgeInsets.only(bottom: 10),
-                                padding: EdgeInsets.symmetric(vertical: 2.5),
-                                decoration: BoxDecoration(
-                                    color: Colors.orange[400].withOpacity(0.7),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    AppLocalizations.of(context)
-                                        .translate('h_publish'),
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                width: double.infinity,
-                                padding: EdgeInsets.symmetric(vertical: 2.5),
-                                decoration: BoxDecoration(
-                                    color: Colors.green[400].withOpacity(0.7),
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    AppLocalizations.of(context)
-                                        .translate('h_buy_ticket'),
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
                           width: double.infinity,
                           margin: EdgeInsets.symmetric(
                             vertical: 15,
@@ -443,6 +402,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   onPressed: () {
                                     // Navigator.of(context)
                                     //     .pushNamed('/ActiveApplications');
+                                    ScaffoldMessenger.of(context).showSnackBar(prug(
+                                        context,
+                                        'Данный экран требует рассмотрения от заказчика'));
                                   },
                                   child: Row(
                                     mainAxisAlignment:
@@ -465,6 +427,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   onPressed: () {
                                     // Navigator.of(context)
                                     //     .pushNamed('/ActiveApplications');
+                                    ScaffoldMessenger.of(context).showSnackBar(prug(
+                                        context,
+                                        'Данный экран требует рассмотрения от заказчика'));
                                   },
                                   child: Row(
                                     mainAxisAlignment:
@@ -487,6 +452,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   onPressed: () {
                                     // Navigator.of(context)
                                     //     .pushNamed('/ActiveApplications');
+                                    ScaffoldMessenger.of(context).showSnackBar(prug(
+                                        context,
+                                        'Данный экран требует рассмотрения от заказчика'));
                                   },
                                   child: Row(
                                     mainAxisAlignment:
@@ -509,6 +477,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   onPressed: () {
                                     // Navigator.of(context)
                                     //     .pushNamed('/ActiveApplications');
+                                    ScaffoldMessenger.of(context).showSnackBar(prug(
+                                        context,
+                                        'Данный экран требует рассмотрения от заказчика'));
                                   },
                                   child: Row(
                                     mainAxisAlignment:
@@ -531,6 +502,34 @@ class _ProfilePageState extends State<ProfilePage> {
                                   onPressed: () {
                                     // Navigator.of(context)
                                     //     .pushNamed('/ActiveApplications');
+                                    ScaffoldMessenger.of(context).showSnackBar(prug(
+                                        context,
+                                        'Данный экран требует рассмотрения от заказчика'));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)
+                                            .translate('suggestion_and_remark'),
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 17),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Colors.black,
+                                        size: 26,
+                                      )
+                                    ],
+                                  )),
+                              TextButton(
+                                  onPressed: () {
+                                    // Navigator.of(context)
+                                    //     .pushNamed('/ActiveApplications');
+                                    ScaffoldMessenger.of(context).showSnackBar(prug(
+                                        context,
+                                        'Данный экран требует рассмотрения от заказчика'));
                                   },
                                   child: Row(
                                     mainAxisAlignment:

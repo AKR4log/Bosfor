@@ -24,14 +24,15 @@ class _MyPostWidgetState extends State<MyPostWidget> {
   }
 
   init() {
+    print(widget.post.m_uid_application);
     FirebaseFirestore.instance
-        .collection("transport")
+        .collection("auto")
         .doc(widget.post.m_uid_application)
         .get()
         .then((snapshot) {
       if (snapshot.data() != null) {
         setState(() {
-          image = snapshot.get('m_photo');
+          image = snapshot.get('photo_1');
         });
       }
     });
@@ -42,7 +43,7 @@ class _MyPostWidgetState extends State<MyPostWidget> {
         .then((snapshot) {
       if (snapshot.data() != null) {
         setState(() {
-          image = snapshot.get('m_photo');
+          image = snapshot.get('p_photo_1');
         });
       }
     });
@@ -53,7 +54,7 @@ class _MyPostWidgetState extends State<MyPostWidget> {
         .then((snapshot) {
       if (snapshot.data() != null) {
         setState(() {
-          image = snapshot.get('m_photo');
+          image = snapshot.get('m_photo_1');
         });
       }
     });

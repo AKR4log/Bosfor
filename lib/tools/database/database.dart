@@ -1,10 +1,15 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kz/pages/web/user/home/home_page.dart';
+import 'package:kz/pages/web/user/profile/profile.dart';
 import 'package:kz/tools/enum/enum.dart';
 import 'package:kz/tools/state/app_state.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class CloudFirestore extends AppState {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
@@ -35,13 +40,8 @@ class CloudFirestore extends AppState {
   signInWithPhoneNumberWebConfirm(code, context) async {
     UserCredential userCredential = await confirmationResult.confirm(code);
     user = userCredential.user;
-    if (userCredential.additionalUserInfo.isNewUser) {
-      authStatus = AuthStatus.REGISTER_NOW_USER;
-      Navigator.pushReplacementNamed(context, "/RegisterPage");
-    } else {
-      authStatus = AuthStatus.LOGGED_IN;
-      Navigator.pushReplacementNamed(context, "/HomePage");
-    }
+    authStatus = AuthStatus.LOGGED_IN;
+    Navigator.of(context).pushReplacementNamed(HomeWebPage.routeName);
   }
 
   /// Вход по номеру телефона v.2
@@ -65,7 +65,11 @@ class CloudFirestore extends AppState {
           if (value.data() != null) {
             authStatus = AuthStatus.LOGGED_IN;
             print(authStatus);
-            Navigator.pushReplacementNamed(context, "/HomePage");
+            if (kIsWeb) {
+              Navigator.of(context).pushReplacementNamed(HomeWebPage.routeName);
+            } else {
+              Navigator.pushReplacementNamed(context, "/HomePage");
+            }
           } else {
             authStatus = AuthStatus.REGISTER_NOW_USER;
             print(authStatus);
@@ -116,8 +120,13 @@ class CloudFirestore extends AppState {
     CollectionReference ref = FirebaseFirestore.instance.collection("users");
     ref.doc(uid).update({
       "uriImage": downloadURI,
-    }).whenComplete(
-        () => Navigator.pushReplacementNamed(context, "/SuccessUploadPhoto"));
+    }).whenComplete(() {
+      if (kIsWeb) {
+        Navigator.of(context).pushReplacementNamed(WebProfilePage.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, "/SuccessUploadPhoto");
+      }
+    });
     return;
   }
 
@@ -130,8 +139,13 @@ class CloudFirestore extends AppState {
     CollectionReference ref = FirebaseFirestore.instance.collection("users");
     ref.doc(uid).update({
       "name": name,
-    }).whenComplete(
-        () => Navigator.pushReplacementNamed(context, "/SuccessUpdateName"));
+    }).whenComplete(() {
+      if (kIsWeb) {
+        Navigator.of(context).pushReplacementNamed(WebProfilePage.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, "/SuccessUpdateName");
+      }
+    });
     return;
   }
 
@@ -143,8 +157,13 @@ class CloudFirestore extends AppState {
     ref.doc(uid).update({
       "name": name,
       "uriImage": downloadURI,
-    }).whenComplete(() =>
-        Navigator.pushReplacementNamed(context, "/SuccessUploadPhotoAndName"));
+    }).whenComplete(() {
+      if (kIsWeb) {
+        Navigator.of(context).pushReplacementNamed(WebProfilePage.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, "/SuccessUploadPhotoAndName");
+      }
+    });
     return;
   }
 
@@ -157,7 +176,12 @@ class CloudFirestore extends AppState {
     String m_heading,
     bool m_negotiated_price,
     bool m_phone,
-    String m_photo,
+    String m_photo_1,
+    String m_photo_2,
+    String m_photo_3,
+    String m_photo_4,
+    String m_photo_5,
+    String m_youtube,
     String m_price,
     String m_region,
     bool m_will_give_free,
@@ -183,8 +207,13 @@ class CloudFirestore extends AppState {
       "m_longitude": m_address != null ? m_longitude : null,
       "m_latitude": m_address != null ? m_latitude : null,
       "m_negotiated_price": m_negotiated_price ?? false,
-      "m_phone": m_phone ? phone : null,
-      "m_photo": m_photo ?? null,
+      "m_phone": phone,
+      "m_photo_1": m_photo_1 ?? null,
+      "m_photo_2": m_photo_2 ?? null,
+      "m_photo_3": m_photo_3 ?? null,
+      "m_photo_4": m_photo_4 ?? null,
+      "m_photo_5": m_photo_5 ?? null,
+      "m_youtube": m_youtube ?? null,
       "m_status_archive": false,
       "m_price": m_price,
       "m_region": m_region,
@@ -205,24 +234,33 @@ class CloudFirestore extends AppState {
   }
 
   Future<void> createAutoApplication(
-    BuildContext context, {
-    String mValAuto,
-    mNameCars,
-    mNameModelCars,
-    dValAuto,
-    dValCommercial,
-    dValRepairsAndService,
-    dValSpareParts,
-    dValOther,
-    mValCarBody,
-    mValDriveAuto,
-    mValGearboxBox,
-    yearOfIssue,
-    engineVolume,
-    mileage,
-    price,
-    description,
-  }) async {
+      BuildContext context, List<Uint8List> listURL,
+      {String mValAuto,
+      mNameCars,
+      mNameModelCars,
+      dValAuto,
+      dValCommercial,
+      dValRepairsAndService,
+      dValSpareParts,
+      dValOther,
+      photo_1,
+      photo_2,
+      photo_3,
+      photo_4,
+      photo_5,
+      youtube,
+      mValCarBody,
+      mValDriveAuto,
+      mValGearboxBox,
+      yearOfIssue,
+      engineVolume,
+      mileage,
+      price,
+      a_head,
+      a_desc,
+      description,
+      adress,
+      region}) async {
     await Firebase.initializeApp();
     String randomName;
     randomName = Uuid().v4();
@@ -238,15 +276,26 @@ class CloudFirestore extends AppState {
       "a_dValRepairsAndService": dValRepairsAndService ?? null,
       "a_dValSpareParts": dValSpareParts ?? null,
       "a_dValOther": dValOther ?? null,
-      "a_mValCarBody": mValCarBody ?? null,
-      "a_mValDriveAuto": mValDriveAuto ?? null,
-      "a_mValGearboxBox": mValGearboxBox ?? null,
+      "photo_1": photo_1 ?? null,
+      "photo_2": photo_2 ?? null,
+      "photo_3": photo_3 ?? null,
+      "photo_4": photo_4 ?? null,
+      "photo_5": photo_5 ?? null,
+      "a_desc": a_desc ?? null,
+      "a_head": a_head ?? null,
+      "youtube": youtube ?? null,
+      "listURL": listURL ?? null,
+      "a_mValCarBody": 'h_m_' + mValCarBody ?? null,
+      "a_mValDriveAuto": 'h_m_' + mValDriveAuto ?? null,
+      "a_mValGearboxBox": 'h_m_' + mValGearboxBox ?? null,
       "a_yearOfIssue": yearOfIssue ?? null,
       "a_engineVolume": engineVolume ?? null,
       "a_mileage": mileage ?? null,
       "a_price": price ?? null,
-      "a_description": description ?? null,
       "a_uid_user_by_application": uid,
+      "a_address": adress ?? null,
+      "a_region": region ?? null,
+      "date_creation_application": DateTime.now().toUtc().toString(),
     });
     CollectionReference refUser =
         FirebaseFirestore.instance.collection("users");
@@ -267,9 +316,17 @@ class CloudFirestore extends AppState {
     String p_bathroom,
     String p_internet,
     String p_condition,
+    String p_photo_1,
+    String p_photo_2,
+    String p_photo_3,
+    String p_photo_4,
+    String p_photo_5,
+    String p_youtube,
     String p_telephone,
     String p_balcony,
     String p_glazed_balcony,
+    String p_head,
+    String p_desc,
     String p_door,
     String p_parking,
     String p_furniture,
@@ -297,6 +354,8 @@ class CloudFirestore extends AppState {
     ref.doc(randomName).set({
       "p_price": p_price ?? null,
       "p_numbers_room": p_numbers_room ?? null,
+      "p_desc": p_desc ?? null,
+      "p_head": p_head ?? null,
       "p_average_category": p_average_category ?? null,
       "p_lower_category": p_lower_category ?? null,
       "p_building_type": p_building_type ?? null,
@@ -305,6 +364,12 @@ class CloudFirestore extends AppState {
       "p_condition": p_condition ?? null,
       "p_telephone": p_telephone ?? null,
       "p_balcony": p_balcony ?? null,
+      "p_photo_1": p_photo_1 ?? null,
+      "p_photo_2": p_photo_2 ?? null,
+      "p_photo_3": p_photo_3 ?? null,
+      "p_photo_4": p_photo_4 ?? null,
+      "p_photo_5": p_photo_5 ?? null,
+      "p_youtube": p_youtube ?? null,
       "p_glazed_balcony": p_glazed_balcony ?? null,
       "p_door": p_door ?? null,
       "p_parking": p_parking ?? null,
@@ -326,8 +391,8 @@ class CloudFirestore extends AppState {
       "is_pledge": is_pledge ?? false,
       "is_in_dorm": is_in_dorm ?? false,
       "is_hide_phone": is_hide_phone ?? false,
-    }).whenComplete(
-        () => Navigator.pushReplacementNamed(context, "/SuccessUpdateName"));
+      "date_creation_application": DateTime.now().toUtc().toString(),
+    }).whenComplete(() => Navigator.pushReplacementNamed(context, "/HomePage"));
     return;
   }
 
@@ -341,6 +406,25 @@ class CloudFirestore extends AppState {
     ref.doc(uid).collection('bookmarks').doc(uidApplications).set({
       "uidApplications": uidApplications,
       "dateCreations": DateTime.now().toUtc().toString(),
+    });
+    return;
+  }
+
+  Future<void> crtReview(
+    BuildContext context,
+    String db,
+    String uidApplication,
+    String review,
+  ) async {
+    await Firebase.initializeApp();
+    String uid = Uuid().v4();
+    String uidUser = FirebaseAuth.instance.currentUser.uid;
+    CollectionReference ref = FirebaseFirestore.instance.collection(db);
+    ref.doc(uidApplication).collection('reviews').doc(uid).set({
+      "uidReviews": uid,
+      "dateCreations": DateTime.now().toUtc().toString(),
+      "txt": review,
+      "uidUser": uidUser,
     });
     return;
   }
@@ -391,15 +475,13 @@ class CloudFirestore extends AppState {
     return;
   }
 
-  Future<void> likedMarket(
-    BuildContext context,
-    String uidApplication,
-  ) async {
+  Future<void> likedMarket(BuildContext context, String uidApplication,
+      {String dbname}) async {
     await Firebase.initializeApp();
     String randomName;
     randomName = Uuid().v4();
     String uid = FirebaseAuth.instance.currentUser.uid;
-    CollectionReference ref = FirebaseFirestore.instance.collection("market");
+    CollectionReference ref = FirebaseFirestore.instance.collection(dbname);
     ref.doc(uidApplication).collection('liked').doc(randomName).set({
       "uidApplication": uidApplication,
       "uidUser": uid,
@@ -409,15 +491,13 @@ class CloudFirestore extends AppState {
     return;
   }
 
-  Future<void> dLikedMarket(
-    BuildContext context,
-    String uidApplication,
-  ) async {
+  Future<void> dLikedMarket(BuildContext context, String uidApplication,
+      {String dbname}) async {
     await Firebase.initializeApp();
     String randomName;
     randomName = Uuid().v4();
     String uid = FirebaseAuth.instance.currentUser.uid;
-    CollectionReference ref = FirebaseFirestore.instance.collection("market");
+    CollectionReference ref = FirebaseFirestore.instance.collection(dbname);
     ref.doc(uidApplication).collection('dliked').doc(randomName).set({
       "uidApplication": uidApplication,
       "uidUser": uid,
@@ -428,23 +508,19 @@ class CloudFirestore extends AppState {
   }
 
   Future<void> removeLiked(
-    BuildContext context,
-    String uidApplication,
-    String uidLiked,
-  ) async {
+      BuildContext context, String uidApplication, String uidLiked,
+      {String dbname}) async {
     await Firebase.initializeApp();
-    CollectionReference ref = FirebaseFirestore.instance.collection("market");
+    CollectionReference ref = FirebaseFirestore.instance.collection(dbname);
     ref.doc(uidApplication).collection('liked').doc(uidLiked).delete();
     return;
   }
 
   Future<void> removeDLiked(
-    BuildContext context,
-    String uidApplication,
-    String uidLiked,
-  ) async {
+      BuildContext context, String uidApplication, String uidLiked,
+      {String dbname}) async {
     await Firebase.initializeApp();
-    CollectionReference ref = FirebaseFirestore.instance.collection("market");
+    CollectionReference ref = FirebaseFirestore.instance.collection(dbname);
     ref.doc(uidApplication).collection('dliked').doc(uidLiked).delete();
     return;
   }

@@ -27,16 +27,23 @@ class _BookmarksPageState extends State<BookmarksPage> {
                 sliver: SliverSafeArea(
                   top: false,
                   sliver: SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    expandedHeight: 100,
                     automaticallyImplyLeading: false,
                     elevation: 0,
-                    backgroundColor: Colors.white,
-                    title: Text(
-                      AppLocalizations.of(context).translate('h_bookmarks'),
-                      style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: "Comfortaa"),
+                    flexibleSpace: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 15, left: 25),
+                        child: Text(
+                          AppLocalizations.of(context).translate('h_bookmarks'),
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Comfortaa"),
+                        ),
+                      ),
                     ),
                   ),
                 ),

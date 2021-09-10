@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "282639646735-f6edl3lc2hp2rj5f0gvl48un2jlc8k06.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bosfor.kz",
+            "certificate_hash": "c713ed25caccabe2558219b2bf604c74bae2dd08"
+          }
+        },
+        {
+          "client_id": "282639646735-o0ulkt6fg31r9ts20i4uogunitij3147.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bosfor.kz",
+            "certificate_hash": "15a5a58e6672b2a799e52ce44a6fb67676ef3ee2"
+          }
+        },
+        {
           "client_id": "282639646735-h4pfbgmqjqgnrb0hldj6b9n93bqi4n1d.apps.googleusercontent.com",
           "client_type": 3
         }

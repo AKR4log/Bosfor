@@ -61,8 +61,8 @@ class _SilimarMarketApplicationContainerState
           borderRadius: BorderRadius.circular(15),
         ),
         margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        child: widget.application.m_photo == null ||
-                widget.application.m_photo == ''
+        child: widget.application.m_photo_1 == null ||
+                widget.application.m_photo_1 == ''
             ? Container()
             : Container(
                 width: double.infinity,
@@ -70,7 +70,7 @@ class _SilimarMarketApplicationContainerState
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: CachedNetworkImage(
-                    imageUrl: widget.application.m_photo,
+                    imageUrl: widget.application.m_photo_1,
                     cacheManager: DefaultCacheManager(),
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(

@@ -4,20 +4,28 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kz/tools/database/utility_database.dart';
+import 'package:kz/tools/models/applications/market.dart';
+import 'package:kz/tools/models/applications/property.dart';
+import 'package:kz/tools/models/applications/transport.dart';
+import 'package:kz/tools/state/feed_state.dart';
 import 'package:kz/tools/utility/utility.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatefulWidget {
   final String chatWithUsername;
+  final String uidApp;
+  final String db;
   ChatScreen(
-    this.chatWithUsername,
-  );
+    this.chatWithUsername, {
+    this.uidApp,
+    this.db,
+  });
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -38,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
   File image;
   bool uploaded = false, selectedImage = false, waiting = false, error = false;
   Future<File> imageFile;
-  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+  // final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -199,7 +207,12 @@ class _ChatScreenState extends State<ChatScreen> {
                     ds["ts"],
                   );
                 })
-            : Center(child: CircularProgressIndicator());
+            : Center(
+                child: Text(
+                  'Здесь пока нет сообщений\nНачните общение',
+                  textAlign: TextAlign.center,
+                ),
+              );
       },
     );
   }
@@ -363,6 +376,201 @@ class _ChatScreenState extends State<ChatScreen> {
       body: Container(
         child: Stack(
           children: [
+            widget.uidApp != null
+                ? Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                        height: 55,
+                        child: widget.db == 'market'
+                            ? StreamBuilder<MarketApplication>(
+                                stream: FeedState(
+                                        uidApplicationMarket: widget.uidApp)
+                                    .marketApplication,
+                                // ignore: missing_return
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    MarketApplication marketApplication =
+                                        snapshot.data;
+                                    return Container(
+                                      color: Color.fromRGBO(240, 240, 242, 1),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 15),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(marketApplication.m_heading),
+                                          Container(
+                                            height: 35,
+                                            width: 35,
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  marketApplication.m_photo_1,
+                                              cacheManager:
+                                                  DefaultCacheManager(),
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                width: double.infinity,
+                                                decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                              ),
+                                              placeholderFadeInDuration:
+                                                  Duration(milliseconds: 500),
+                                              placeholder: (context, url) =>
+                                                  Container(
+                                                color: Colors.grey[300]
+                                                    .withOpacity(0.3),
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      Icon(Icons.error),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                })
+                            : widget.db == 'property'
+                                ? StreamBuilder<PropertyApplication>(
+                                    stream: FeedState(
+                                            uidApplicationMarket: widget.uidApp)
+                                        .propertyApplication,
+                                    // ignore: missing_return
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        PropertyApplication marketApplication =
+                                            snapshot.data;
+                                        return Container(
+                                          color:
+                                              Color.fromRGBO(240, 240, 242, 1),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 15),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(marketApplication.p_head),
+                                              Container(
+                                                height: 35,
+                                                width: 35,
+                                                child: CachedNetworkImage(
+                                                  imageUrl: marketApplication
+                                                      .p_photo_1,
+                                                  cacheManager:
+                                                      DefaultCacheManager(),
+                                                  imageBuilder: (context,
+                                                          imageProvider) =>
+                                                      Container(
+                                                    width: double.infinity,
+                                                    decoration: BoxDecoration(
+                                                        image: DecorationImage(
+                                                          image: imageProvider,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10)),
+                                                  ),
+                                                  placeholderFadeInDuration:
+                                                      Duration(
+                                                          milliseconds: 500),
+                                                  placeholder: (context, url) =>
+                                                      Container(
+                                                    color: Colors.grey[300]
+                                                        .withOpacity(0.3),
+                                                  ),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Icon(Icons.error),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    })
+                                : widget.db == 'auto'
+                                    ? StreamBuilder<TransportApplication>(
+                                        stream: FeedState(
+                                                uidApplicationMarket:
+                                                    widget.uidApp)
+                                            .autoApplication,
+                                        // ignore: missing_return
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            TransportApplication
+                                                marketApplication =
+                                                snapshot.data;
+                                            return Container(
+                                              color: Color.fromRGBO(
+                                                  240, 240, 242, 1),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 15),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(marketApplication
+                                                      .a_head),
+                                                  Container(
+                                                    height: 35,
+                                                    width: 35,
+                                                    child: CachedNetworkImage(
+                                                      imageUrl:
+                                                          marketApplication
+                                                              .photo_1,
+                                                      cacheManager:
+                                                          DefaultCacheManager(),
+                                                      imageBuilder: (context,
+                                                              imageProvider) =>
+                                                          Container(
+                                                        width: double.infinity,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                image:
+                                                                    DecorationImage(
+                                                                  image:
+                                                                      imageProvider,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10)),
+                                                      ),
+                                                      placeholderFadeInDuration:
+                                                          Duration(
+                                                              milliseconds:
+                                                                  500),
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Container(
+                                                        color: Colors.grey[300]
+                                                            .withOpacity(0.3),
+                                                      ),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Icon(Icons.error),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }
+                                        })
+                                    : SizedBox()),
+                  )
+                : SizedBox(),
             chatMessages(),
             Container(
               alignment: Alignment.bottomCenter,

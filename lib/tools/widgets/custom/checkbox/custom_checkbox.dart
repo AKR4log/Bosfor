@@ -16,8 +16,8 @@ class AppCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backColor = disabled ? Colors.black12 : Colors.black26;
-    final checkColor = disabled ? Colors.black54 : Colors.black;
+    final backColor = disabled ? Colors.white12 : Colors.white24;
+    final checkColor = disabled ? Colors.white54 : Colors.white;
 
     return Theme(
       data: Theme.of(context).copyWith(

@@ -35,12 +35,12 @@ class _BottomMenubarState extends State<BottomMenubar> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          _icon(Icons.search_rounded, 0),
-          _icon(Icons.outbox_rounded, 1),
-          _icon(Icons.dashboard_customize_rounded, 2),
-          _icon(Icons.mail, 3),
+          _icon(Icons.home_rounded, 0),
+          _icon(Icons.favorite_rounded, 1),
+          _icon(Icons.add_circle_rounded, 2),
+          _icon(Icons.near_me_rounded, 3),
           _icon(
-            Icons.data_usage_rounded,
+            Icons.account_circle_rounded,
             4,
           ),
         ],

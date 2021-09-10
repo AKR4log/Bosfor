@@ -18,22 +18,50 @@ class _ActiveApplicationsAuthUserState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
-          AppLocalizations.of(context).translate('h_active_application'),
-          style: TextStyle(color: Colors.black),
-        ),
-        leading: BackButton(
-          color: Colors.black,
-        ),
-      ),
-      body: StreamProvider<List<Application>>.value(
-        value: FeedState().allApplicationsAuthUser,
-        child: MyPostList(),
-      ),
-    );
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverSafeArea(
+                  top: false,
+                  sliver: SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    expandedHeight: 100,
+                    // pinned: true,
+                    floating: true,
+                    snap: true,
+                    automaticallyImplyLeading: false,
+                    elevation: 0,
+                    leading: BackButton(
+                      color: Colors.black,
+                    ),
+                    flexibleSpace: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 15, left: 25),
+                        child: Text(
+                          AppLocalizations.of(context)
+                              .translate('h_active_application'),
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Comfortaa"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: StreamProvider<List<Application>>.value(
+            value: FeedState().allApplicationsAuthUser,
+            child: MyPostList(),
+          ),
+        ));
   }
 }

@@ -59,22 +59,41 @@ class _ChatTabState extends State<ChatTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
-        title: Text(
-          AppLocalizations.of(context).translate('h_chats'),
-          style: TextStyle(
-              color: Colors.black87,
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              fontFamily: "Comfortaa"),
-        ),
-      ),
-      body: chatRoomsList(),
-    );
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverSafeArea(
+                  top: false,
+                  sliver: SliverAppBar(
+                    backgroundColor: Colors.transparent,
+                    expandedHeight: 100,
+                    automaticallyImplyLeading: false,
+                    elevation: 0,
+                    flexibleSpace: Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Container(
+                        margin: EdgeInsets.only(bottom: 15, left: 25),
+                        child: Text(
+                          AppLocalizations.of(context).translate('h_chats'),
+                          style: TextStyle(
+                              color: Colors.black87,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: "Comfortaa"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: chatRoomsList(),
+        ));
   }
 }
 
@@ -100,7 +119,7 @@ class _ChatRoomListTileState extends State<ChatRoomListTile> {
     username = widget.chatRoomId.replaceAll(widget.uid, "").replaceAll("_", "");
     QuerySnapshot querySnapshot = await DatabaseMethods().getUserInfo(username);
     name = querySnapshot.docs[0]['name'] ?? '';
-    surname = querySnapshot.docs[0].data()['surname'] ?? '';
+    surname = querySnapshot.docs[0]['surname'] ?? '';
     uriImage = querySnapshot.docs[0]['uriImage'] ?? null;
     setState(() {});
   }

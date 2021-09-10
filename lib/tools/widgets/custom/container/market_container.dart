@@ -4,9 +4,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kz/pages/phone/user/feed/market/widget/widget_screen_market.dart';
 import 'package:kz/tools/database/database.dart';
 import 'package:kz/tools/models/applications/market.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:kz/tools/utility/utility.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,26 +62,36 @@ class _MarketApplicationContainerState
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed('/WidgetMarket/' + widget.application.m_uid_application);
+        if (kIsWeb) {
+          Navigator.pushNamed(
+            context,
+            WidgetContainerMarket.routeName,
+            arguments:
+                ScreenArguments('args', widget.application.m_uid_application),
+          );
+        } else {
+          Navigator.of(context).pushNamed(
+              '/WidgetMarket/' + widget.application.m_uid_application);
+        }
       },
       child: Container(
         decoration: BoxDecoration(
           color: Colors.black.withOpacity(0.025),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(8),
         ),
-        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        margin: EdgeInsets.all(2.5),
         child: Column(
           children: [
-            widget.application.m_photo == null ||
-                    widget.application.m_photo == ''
+            widget.application.m_photo_1 == null ||
+                    widget.application.m_photo_1 == ''
                 ? Container()
                 : Container(
                     width: double.infinity,
                     height: 170,
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(10),
                       child: CachedNetworkImage(
-                        imageUrl: widget.application.m_photo,
+                        imageUrl: widget.application.m_photo_1,
                         cacheManager: DefaultCacheManager(),
                         imageBuilder: (context, imageProvider) => Stack(
                           children: [
@@ -92,35 +104,35 @@ class _MarketApplicationContainerState
                               ),
                             ),
                             Align(
-                              alignment: Alignment.topRight,
+                              alignment: Alignment.bottomRight,
                               child: Container(
                                 height: 40,
                                 width: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black.withOpacity(0.03),
-                                ),
-                                margin: EdgeInsets.only(right: 5, top: 5),
+                                margin: EdgeInsets.only(right: 5, bottom: 5),
                                 child: Center(
                                   child: IconButton(
-                                    icon: Icon(Icons.outbox_rounded,
-                                        color: outbox
-                                            ? Colors.black26
-                                            : Colors.white),
+                                    icon: Icon(
+                                        outbox
+                                            ? Icons.favorite_rounded
+                                            : Icons.favorite_border_rounded,
+                                        color: Colors.white.withOpacity(0.85)),
                                     onPressed: () {
                                       final snackBarAdd = SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: Colors.blueAccent[300],
+                                        backgroundColor: Colors.white,
                                         content: Row(
                                           children: [
-                                            Icon(
-                                              Icons.outbox_rounded,
-                                              color: Colors.blue[200],
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 15),
+                                              child: Icon(
+                                                Icons.outbox_rounded,
+                                                color: Colors.blue[400],
+                                              ),
                                             ),
                                             Text(
                                               'Добавленно в избранное',
                                               style: TextStyle(
-                                                  color: Colors.blue[200],
+                                                  color: Colors.blue[400],
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15),
                                             ),
@@ -128,13 +140,16 @@ class _MarketApplicationContainerState
                                         ),
                                       );
                                       final snackBarDetele = SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: Colors.blueAccent[300],
+                                        backgroundColor: Colors.white,
                                         content: Row(
                                           children: [
-                                            Icon(
-                                              Icons.delete_forever_rounded,
-                                              color: Colors.red[200],
+                                            Container(
+                                              margin:
+                                                  EdgeInsets.only(right: 15),
+                                              child: Icon(
+                                                Icons.delete_forever_rounded,
+                                                color: Colors.red[200],
+                                              ),
                                             ),
                                             Text(
                                               'Удалено из избранного',
@@ -196,35 +211,50 @@ class _MarketApplicationContainerState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: Text(
-                      widget.application.m_negotiated_price != false
-                          ? 'Договорная цена'
-                          : widget.application.m_will_give_free != false
-                          ? 'Отдам даром'
-                          : '₸${widget.application.m_price}',
-                      overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-                    ),
-                  ),
-                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 2.5),
                     child: Text(
                       widget.application.m_heading,
                       overflow: TextOverflow.ellipsis,
                       style:
-                          TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                     ),
                   ),
                   Container(
                     child: Text(
-                      widget.application.m_address != null
-                          ? widget.application.m_address
-                          : widget.application.m_region != null
-                          ? widget.application.m_region
-                          : 'Не определенно',
+                      widget.application.m_negotiated_price != false
+                          ? 'Договорная цена'
+                          : widget.application.m_will_give_free != false
+                              ? 'Отдам даром'
+                              : '₸ ${widget.application.m_price}',
                       overflow: TextOverflow.ellipsis,
-                      style:
-                          TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 2),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          widget.application.m_address != null
+                              ? widget.application.m_address
+                              : widget.application.m_region != null
+                                  ? widget.application.m_region
+                                  : 'Не определенно',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 12, fontWeight: FontWeight.w400),
+                        ),
+                        Text(
+                          getChatTime(context,
+                              widget.application.m_date_creation_application),
+                          style: TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.w400),
+                        )
+                      ],
                     ),
                   ),
                 ],

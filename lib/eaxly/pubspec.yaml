@@ -1,0 +1,57 @@
+name: eaxly
+description: Service to ensure a secure transaction.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # DATABASE components
+  firebase_core: ^1.6.0
+  firebase_auth: ^3.1.0
+  firebase_analytics: ^8.3.1
+  cloud_firestore: ^2.5.1
+  firebase_messaging: ^10.0.6
+  firebase_storage: ^10.0.3
+
+  # UI components
+  cupertino_icons: ^1.0.2
+  cached_network_image: ^3.1.0
+  flutter_local_notifications: ^8.1.1+2
+  flutter_multi_formatter: ^2.3.5
+  pin_view: ^1.0.1
+
+  # System components
+  storage_path: ^0.2.0
+  uuid: ^3.0.4
+  photo_manager: ^1.3.1
+  shared_preferences: ^2.0.7
+  flutter_native_image: ^0.0.6+1
+  permission_handler: ^8.1.4+2
+  path_provider: ^2.0.2
+  path: ^1.8.0
+  provider: ^6.0.0
+  intl: ^0.17.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+  # flutter_launcher_icons: ^0.9.2
+  flutter_lints: ^1.0.0
+
+# flutter_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/images/img_logo.png"
+
+flutter:
+
+  uses-material-design: true

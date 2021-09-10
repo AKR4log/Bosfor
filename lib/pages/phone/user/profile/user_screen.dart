@@ -2,7 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kz/app_localizations.dart';
 import 'package:kz/pages/phone/user/feed/market/list_all_market_applications.dart';
+import 'package:kz/pages/phone/user/feed/property/list_all_property_applications.dart';
+import 'package:kz/pages/phone/user/feed/transport/list_all_transport_applications.dart';
 import 'package:kz/tools/models/applications/market.dart';
+import 'package:kz/tools/models/applications/property.dart';
+import 'package:kz/tools/models/applications/transport.dart';
 import 'package:kz/tools/models/user/user.dart';
 import 'package:kz/tools/state/feed_state.dart';
 import 'package:provider/provider.dart';
@@ -66,82 +70,122 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          leading: BackButton(color: Colors.black),
-          backgroundColor: baseColor,
-          centerTitle: true,
-          title: Text(
-            widget.profileId,
-            style: TextStyle(
-                color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-        ),
-        body: StreamBuilder<UserData>(
-            stream: FeedState(uidUser: widget.profileId).qUser,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                UserData userData = snapshot.data;
-                return Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.symmetric(vertical: 25),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                        child: Column(
-                          children: [
-                            Container(
-                                child: Row(
-                              children: [
-                                Text(
-                                  userData.u_name,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 28),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  userData.u_surname,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 28),
-                                ),
-                              ],
-                            )),
-                            Container(
-                                child: Row(
-                              children: [
-                                Text(
+    return DefaultTabController(
+      length: 3,
+      child: StreamBuilder<UserData>(
+        stream: FeedState(uidUser: widget.profileId).qUser,
+        // ignore: missing_return
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            UserData userData = snapshot.data;
+            return Scaffold(
+              backgroundColor: Colors.white,
+              body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverOverlapAbsorber(
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                          context),
+                      sliver: SliverSafeArea(
+                        top: false,
+                        sliver: SliverAppBar(
+                          pinned: true,
+                          automaticallyImplyLeading: true,
+                          elevation: 0,
+                          // centerTitle: true,
+                          leading: BackButton(
+                            color: Colors.black,
+                          ),
+                          backgroundColor: Colors.transparent,
+                          expandedHeight: 100,
+                          title: Text(
+                            userData.u_name,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          bottom: TabBar(
+                            indicatorColor: Colors.black,
+                            indicatorWeight: 2,
+                            labelColor: Colors.black,
+                            labelStyle: TextStyle(fontSize: 25),
+                            unselectedLabelStyle: TextStyle(
+                              fontSize: 15,
+                            ),
+                            unselectedLabelColor: Colors.black,
+                            automaticIndicatorColorAdjustment: true,
+                            isScrollable: true,
+                            padding: EdgeInsets.symmetric(horizontal: 25),
+                            indicatorPadding:
+                                EdgeInsets.symmetric(horizontal: 25),
+                            tabs: <Widget>[
+                              Tab(
+                                child: Text(
                                   AppLocalizations.of(context)
-                                      .translate('h_def_number_phone'),
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15),
+                                      .translate('h_market'),
                                 ),
-                                Text(userData.u_phone_number),
-                              ],
-                            )),
-                          ],
+                              ),
+                              Tab(
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .translate('h_auto'),
+                                ),
+                              ),
+                              Tab(
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .translate('h_property'),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      Expanded(
-                        child: StreamProvider<List<MarketApplication>>.value(
-                          value: FeedState(uidUser: widget.profileId)
-                              .allMarketApplicationsUID,
-                          child: ListMarketApplications(),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              }
-            }));
+                    ),
+                  ];
+                },
+                body: Column(
+                  children: [
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          Expanded(
+                            child:
+                                StreamProvider<List<MarketApplication>>.value(
+                              value: FeedState(uidUser: widget.profileId)
+                                  .allMarketApplicationsUID,
+                              child: ListMarketApplications(),
+                            ),
+                          ),
+                          Expanded(
+                            child: StreamProvider<
+                                List<TransportApplication>>.value(
+                              value: FeedState(uidUser: widget.profileId)
+                                  .allAutoApplicationsUID,
+                              child: ListTransportApplications(),
+                            ),
+                          ),
+                          Expanded(
+                            child:
+                                StreamProvider<List<PropertyApplication>>.value(
+                              value: FeedState(uidUser: widget.profileId)
+                                  .allPropertyApplicationsUID,
+                              child: ListPropertyApplications(),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }

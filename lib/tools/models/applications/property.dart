@@ -1,5 +1,7 @@
 class PropertyApplication {
   final String p_price;
+  final String p_head;
+  final String p_desc;
   final String p_numbers_room;
   final String p_average_category;
   final String p_lower_category;
@@ -13,6 +15,12 @@ class PropertyApplication {
   final String p_door;
   final String p_parking;
   final String p_furniture;
+  final String p_photo_1;
+  final String p_photo_2;
+  final String p_photo_3;
+  final String p_photo_4;
+  final String p_photo_5;
+  final String p_youtube;
   final String p_floor;
   final String p_year_built;
   final String p_total_area;
@@ -30,8 +38,12 @@ class PropertyApplication {
   final bool is_pledge;
   final bool is_in_dorm;
   final bool is_hide_phone;
+  final String date_creation_application;
 
   PropertyApplication({
+    this.p_head,
+    this.date_creation_application,
+    this.p_desc,
     this.is_hide_phone,
     this.is_in_dorm,
     this.is_pledge,
@@ -63,5 +75,11 @@ class PropertyApplication {
     this.p_year_built,
     this.uid_property,
     this.uid_user,
+    this.p_photo_1,
+    this.p_photo_2,
+    this.p_photo_3,
+    this.p_photo_4,
+    this.p_photo_5,
+    this.p_youtube,
   });
 }

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kz/app_localizations.dart';
 import 'package:kz/pages/phone/user/feed/market/list_all_market_applications.dart';
@@ -30,114 +31,104 @@ class _FeedPageState extends State<FeedPage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-          body: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverOverlapAbsorber(
-                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                        context),
-                    sliver: SliverSafeArea(
-                      top: false,
-                      sliver: SliverAppBar(
-                        automaticallyImplyLeading: false,
-                        elevation: 0,
-                        actions: [
-                          Container(
-                            margin: EdgeInsets.only(right: 15),
-                            child: Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.search_rounded,
-                                        color: Colors.black))
-                              ],
-                            ),
-                          )
-                        ],
-                        backgroundColor: Colors.white,
-                        bottom: TabBar(
-                          indicatorColor: Colors.black26,
-                          automaticIndicatorColorAdjustment: true,
-                          isScrollable: true,
-                          tabs: <Widget>[
-                            Tab(
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .translate('h_market'),
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .translate('h_auto'),
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                AppLocalizations.of(context)
-                                    .translate('h_property'),
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                            ),
-                          ],
-                        ),
-                        title: Text(
-                          'Bosfor',
-                          style: TextStyle(
-                              color: Colors.black87,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: "Comfortaa"),
-                        ),
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverOverlapAbsorber(
+                handle:
+                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                sliver: SliverSafeArea(
+                  top: false,
+                  sliver: SliverAppBar(
+                    pinned: true,
+                    automaticallyImplyLeading: true,
+                    elevation: 0,
+                    // centerTitle: true,
+                    // title: Text(
+                    //   'Bosfor',
+                    //   style: TextStyle(color: Colors.black, fontSize: 17),
+                    // ),
+                    backgroundColor: Colors.transparent,
+                    expandedHeight: 100,
+                    bottom: TabBar(
+                      indicatorColor: Colors.black,
+                      indicatorWeight: 2,
+                      labelColor: Colors.black,
+                      labelStyle: TextStyle(fontSize: 25),
+                      unselectedLabelStyle: TextStyle(
+                        fontSize: 15,
                       ),
+                      unselectedLabelColor: Colors.black,
+                      automaticIndicatorColorAdjustment: true,
+                      isScrollable: true,
+                      padding: EdgeInsets.symmetric(horizontal: 25),
+                      indicatorPadding: EdgeInsets.symmetric(horizontal: 25),
+                      tabs: <Widget>[
+                        Tab(
+                          child: Text(
+                            AppLocalizations.of(context).translate('h_market'),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            AppLocalizations.of(context).translate('h_auto'),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            AppLocalizations.of(context)
+                                .translate('h_property'),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ];
-              },
-              body: TabBarView(children: [
-                SafeArea(
-                  top: false,
-                  bottom: false,
-                  child: Builder(
-                    builder: (BuildContext context) {
-                      return StreamProvider<List<MarketApplication>>.value(
-                        value: FeedState().allMarketApplications,
-                        child: ListMarketApplications(),
-                      );
-                    },
-                  ),
                 ),
-                SafeArea(
-                  top: false,
-                  bottom: false,
-                  child: Builder(
-                    builder: (BuildContext context) {
-                      return StreamProvider<List<TransportApplication>>.value(
-                        value: FeedState().allTransportApplications,
-                        child: ListTransportApplications(),
-                      );
-                    },
-                  ),
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              SafeArea(
+                top: false,
+                bottom: false,
+                child: Builder(
+                  builder: (BuildContext context) {
+                    return StreamProvider<List<MarketApplication>>.value(
+                      value: FeedState().allMarketApplications,
+                      child: ListMarketApplications(),
+                    );
+                  },
                 ),
-                SafeArea(
-                  top: false,
-                  bottom: false,
-                  child: Builder(
-                    builder: (BuildContext context) {
-                      return StreamProvider<List<PropertyApplication>>.value(
-                        value: FeedState().allPropertyApplications,
-                        child: ListPropertyApplications(),
-                      );
-                    },
-                  ),
+              ),
+              SafeArea(
+                top: false,
+                bottom: false,
+                child: Builder(
+                  builder: (BuildContext context) {
+                    return StreamProvider<List<TransportApplication>>.value(
+                      value: FeedState().allTransportApplications,
+                      child: ListTransportApplications(),
+                    );
+                  },
                 ),
-              ]))),
+              ),
+              SafeArea(
+                top: false,
+                bottom: false,
+                child: Builder(
+                  builder: (BuildContext context) {
+                    return StreamProvider<List<PropertyApplication>>.value(
+                      value: FeedState().allPropertyApplications,
+                      child: ListPropertyApplications(),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
