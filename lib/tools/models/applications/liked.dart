@@ -1,7 +1,11 @@
 class Liked {
-  final String uidPost;
-  final String uidLiked;
-  final String timeCreated;
-  final String fromUserUID;
-  Liked({this.timeCreated, this.fromUserUID, this.uidLiked, this.uidPost});
+  final String uidApplication;
+  final String uidLikedApplication;
+  final String dateCreations;
+  final String uidUser;
+  Liked(
+      {this.dateCreations,
+      this.uidUser,
+      this.uidLikedApplication,
+      this.uidApplication});
 }

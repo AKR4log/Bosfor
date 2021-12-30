@@ -173,8 +173,8 @@ class _EditProfileState extends State<EditProfile> {
                                     : GestureDetector(
                                         onTap: () => getPhotoModalBottomSheet(
                                             context, true, true),
-                                        child: userData.u_uri_avatars != null &&
-                                                userData.u_uri_avatars != ''
+                                        child: userData.uriImage != null &&
+                                                userData.uriImage != ''
                                             ? ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(50),
@@ -182,8 +182,7 @@ class _EditProfileState extends State<EditProfile> {
                                                   width: 75,
                                                   height: 75,
                                                   child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        userData.u_uri_avatars,
+                                                    imageUrl: userData.uriImage,
                                                     cacheManager:
                                                         DefaultCacheManager(),
                                                     imageBuilder: (context,
@@ -222,14 +221,13 @@ class _EditProfileState extends State<EditProfile> {
                                                               40)),
                                                   child: Center(
                                                     child: Text(
-                                                        (userData.u_surname !=
-                                                                    ''
-                                                                ? userData.u_name[
+                                                        (userData.surname != ''
+                                                                ? userData.name[
                                                                         0] +
-                                                                    userData.u_surname[
+                                                                    userData.surname[
                                                                         0]
                                                                 : userData
-                                                                    .u_name[0])
+                                                                    .name[0])
                                                             .toUpperCase(),
                                                         style:
                                                             TextStyle(
@@ -263,9 +261,9 @@ class _EditProfileState extends State<EditProfile> {
                                         color: Colors.black.withOpacity(0.05),
                                         borderRadius: BorderRadius.circular(5)),
                                     child: textField(controllerName, false,
-                                        hint: userData.u_name +
+                                        hint: userData.name +
                                                 ' ' +
-                                                userData.u_surname ??
+                                                userData.surname ??
                                             '',
                                         isSide: true),
                                   ),

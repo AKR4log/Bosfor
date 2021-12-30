@@ -86,7 +86,7 @@ class _ListMarketApplicationsState extends State<ListMarketApplications> {
   @override
   Widget build(BuildContext context) {
     final marketApplication = Provider.of<List<MarketApplication>>(context);
-    return marketApplication.length == 0
+    return marketApplication.length <= 0
         ? Center(
             child: CircularProgressIndicator(
               strokeWidth: 3,

@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 List m_average_category = [
   {'name': 'Услуги', 'value': 'services'},
   {'name': 'Электроника', 'value': 'electronics'},
@@ -9,6 +11,7 @@ List m_average_category = [
   {'name': 'Хобби и спорт', 'value': 'hobbies_and_sports'},
   {'name': 'Работа', 'value': 'work'},
 ];
+
 List m_lower_category_for_services = [
   {'name': 'Строительство и ремонт', 'value': 'construction_and_repair'},
   {'name': 'Образование, курсы', 'value': 'education_or_courses'},
@@ -3522,9 +3525,9 @@ List a_main_category = [
 ];
 List a_desc_cars = [
   {'name': 'Легковые', 'value': 'passenger_cars'},
-  {'name': 'Автосалоны', 'value': 'car_dealerships'},
-  {'name': 'Мототехника', 'value': 'mototechnics'},
-  {'name': 'Водный транспорт', 'value': 'water_transport'},
+  // {'name': 'Автосалоны', 'value': 'car_dealerships'},
+  // {'name': 'Мототехника', 'value': 'mototechnics'},
+  // {'name': 'Водный транспорт', 'value': 'water_transport'},
 ];
 List a_desc_spare_parts = [
   {'name': 'Автозапчасти', 'value': 'auto_parts'},
@@ -3545,6 +3548,13 @@ List a_desc_repairs_and_services = [
   {'name': 'Услуги', 'value': 'services'},
   {'name': 'Тюнинг', 'value': 'tuning'},
   {'name': 'Другие', 'value': 'others'},
+];
+List condition_auto = [
+  {'name': 'Аварийная, не на ходу', 'value': 'not_on_move'},
+  {
+    'name': 'Требует ремонта аварийная, но на ходу',
+    'value': 'emergency_needs_repair'
+  },
 ];
 List a_desc_commercial = [
   {'name': 'Грузовики', 'value': 'trucks'},
@@ -3654,6 +3664,34 @@ List body_color = [
   {'name': 'Сиреневый', 'value': 'bc_lilac'},
   {'name': 'Фиолетовый', 'value': 'bc_purple'},
   {'name': 'Чёрный', 'value': 'bc_black'},
+];
+
+List rent_auto_term = [
+  {'name': 'Прокат на день', 'value': 'rent_for_day'},
+  {'name': 'Прокат на неделю', 'value': 'rent_for_week'},
+  {'name': 'Прокат на месяц', 'value': 'rent_for_month'},
+  {'name': 'Долгосрочный', 'value': 'long_term'},
+];
+List rent_auto_payment = [
+  {'name': 'Наличные', 'value': 'cash'},
+  {'name': 'Безналичные', 'value': 'cashless'},
+  {'name': 'По договоренности', 'value': 'by_agreement'},
+];
+List rent_auto_an_initial_fee = [
+  {'name': 'От - до', 'value': 'from_to'},
+  {'name': 'По договоренности', 'value': 'by_agreement'},
+  {'name': 'Без первоначального взноса', 'value': 'no_down_payment'},
+];
+List rent_auto_contract = [
+  {'name': 'Нотариально как физическое лицо', 'value': 'notarized_individual'},
+  {'name': 'Договор от фирмы', 'value': 'company_contract'},
+];
+List rent_auto_casco_insurance = [
+  {'name': 'С арендатора', 'value': 'from_tenant'},
+  {'name': 'С арендодателя', 'value': 'from_landlord'},
+  {'name': 'По договоренности', 'value': 'by_agreement'},
+  {'name': 'От хозяина', 'value': 'from_owner'},
+  {'name': 'От фирмы', 'value': 'from_firm'},
 ];
 
 List city_kz = [

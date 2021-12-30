@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kz/tools/models/applications/applications.dart';
 import 'package:kz/tools/models/applications/bookmarks.dart';
+import 'package:kz/tools/models/applications/liked.dart';
 import 'package:kz/tools/models/applications/market.dart';
 import 'package:kz/tools/models/applications/property.dart';
 import 'package:kz/tools/models/applications/reviews.dart';
@@ -42,11 +43,12 @@ class FeedState extends AppState {
   // Get data AuthUser
   UserData _getAuthUser(DocumentSnapshot snapshot) {
     return UserData(
-        u_name: snapshot.get('name'),
-        u_phone_number: snapshot.get('phoneNumber'),
-        u_surname: snapshot.get('surname'),
-        u_uri_avatars: snapshot.get('uriImage'),
-        u_uid: snapshot.get('uidUser'));
+        name: snapshot.get('name'),
+        phoneNumber: snapshot.get('phoneNumber'),
+        surname: snapshot.get('surname'),
+        uriImage: snapshot.get('uriImage'),
+        pushToken: snapshot.get('pushToken'),
+        uidUser: snapshot.get('uidUser'));
   }
 
   PropertyApplication _getPropertyApplications(DocumentSnapshot snapshot) {
@@ -110,6 +112,15 @@ class FeedState extends AppState {
       date_creation_application: snapshot.get('date_creation_application'),
       a_region: snapshot.get("a_region"),
       listURL: snapshot.get('listURL'),
+      rent_auto_term_val: snapshot.get('rent_auto_term_val'),
+      rent_auto_payment_val: snapshot.get('rent_auto_payment_val'),
+      rent_auto_an_initial_fee_val:
+          snapshot.get('rent_auto_an_initial_fee_val'),
+      rent_auto_contract_val: snapshot.get('rent_auto_contract_val'),
+      rent_auto_casco_insurance_val:
+          snapshot.get('rent_auto_casco_insurance_val'),
+      valCondition: snapshot.get('valCondition'),
+      controllerPriceForTerm: snapshot.get('controllerPriceForTerm'),
       photo_1: snapshot.get('photo_1'),
       photo_2: snapshot.get('photo_2'),
       photo_3: snapshot.get('photo_3'),
@@ -156,6 +167,16 @@ class FeedState extends AppState {
       m_upper_category: snapshot.get('m_upper_category'),
       m_will_give_free: snapshot.get('m_will_give_free'),
     );
+  }
+
+  List<Liked> loadLikedProfile(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Liked(
+          dateCreations: doc.get('dateCreations') ?? null,
+          uidUser: doc.get('uidUser') ?? null,
+          uidLikedApplication: doc.get('uidLikedApplication') ?? null,
+          uidApplication: doc.get('uidApplication') ?? null);
+    }).toList();
   }
 
   // Loading all market applications
@@ -215,6 +236,15 @@ class FeedState extends AppState {
         photo_4: doc.get('photo_4') ?? null,
         photo_5: doc.get('photo_5') ?? null,
         youtube: doc.get('youtube') ?? null,
+        rent_auto_term_val: doc.get('rent_auto_term_val') ?? null,
+        rent_auto_payment_val: doc.get('rent_auto_payment_val') ?? null,
+        rent_auto_an_initial_fee_val:
+            doc.get('rent_auto_an_initial_fee_val') ?? null,
+        rent_auto_contract_val: doc.get('rent_auto_contract_val') ?? null,
+        rent_auto_casco_insurance_val:
+            doc.get('rent_auto_casco_insurance_val') ?? null,
+        valCondition: doc.get('valCondition') ?? null,
+        controllerPriceForTerm: doc.get('controllerPriceForTerm') ?? null,
         date_creation_application: doc.get('date_creation_application') ?? null,
         a_dValOther: doc.get("a_dValOther") ?? null,
         a_mValCarBody: doc.get("a_mValCarBody") ?? null,
@@ -315,6 +345,14 @@ class FeedState extends AppState {
         .orderBy('m_date_creation_application', descending: true)
         .snapshots()
         .map(_loadAllMarketApplications);
+  }
+
+  Stream<List<Liked>> get followingMarket {
+    return marketCollection
+        .doc(uidApplicationMarket)
+        .collection('liked')
+        .snapshots()
+        .map(loadLikedProfile);
   }
 
   Stream<List<MarketApplication>> get searchMarket {

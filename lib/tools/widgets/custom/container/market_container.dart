@@ -181,7 +181,8 @@ class _MarketApplicationContainerState
                                               .addBookmarks(
                                                   context,
                                                   widget.application
-                                                      .m_uid_application)
+                                                      .m_uid_application,
+                                                  'market')
                                               .whenComplete(() {
                                               setState(() {
                                                 outbox = true;
@@ -229,30 +230,36 @@ class _MarketApplicationContainerState
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 14,
                           color: Colors.black),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 2),
-                    child: Row(
+                    child: Flex(
+                      direction: Axis.horizontal,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          widget.application.m_address != null
-                              ? widget.application.m_address
-                              : widget.application.m_region != null
-                                  ? widget.application.m_region
-                                  : 'Не определенно',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400),
+                        Flexible(
+                          flex: 3,
+                          child: Text(
+                            widget.application.m_address != null
+                                ? widget.application.m_address
+                                : widget.application.m_region != null
+                                    ? widget.application.m_region
+                                    : 'Не определенно',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 10, fontWeight: FontWeight.w400),
+                          ),
                         ),
-                        Text(
-                          getChatTime(context,
-                              widget.application.m_date_creation_application),
-                          style: TextStyle(
-                              fontSize: 10, fontWeight: FontWeight.w400),
+                        Flexible(
+                          flex: 1,
+                          child: Text(
+                            getChatTime(context,
+                                widget.application.m_date_creation_application),
+                            style: TextStyle(
+                                fontSize: 8, fontWeight: FontWeight.w400),
+                          ),
                         )
                       ],
                     ),

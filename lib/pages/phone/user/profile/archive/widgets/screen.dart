@@ -135,13 +135,13 @@ class _ArchiveWidgetContainerMarketState
                                                         .translate(
                                                             'h_m_negotiated_price')
                                                     : marketApplication
-                                                            .m_will_give_free !=
-                                                        false
-                                                    ? AppLocalizations.of(
-                                                            context)
-                                                        .translate(
-                                                            'h_m_will_give_free')
-                                                    : '₸${marketApplication.m_price}',
+                                                                .m_will_give_free !=
+                                                            false
+                                                        ? AppLocalizations.of(
+                                                                context)
+                                                            .translate(
+                                                                'h_m_will_give_free')
+                                                        : '₸${marketApplication.m_price}',
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontSize: 22,
@@ -331,7 +331,7 @@ class _ArchiveWidgetContainerMarketState
                             child: Container(
                               width: double.infinity,
                               color: Colors.blue.withOpacity(0.25),
-                              height: 115,
+                              height: 220,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 15, vertical: 20),
                               child: Column(
@@ -346,11 +346,33 @@ class _ArchiveWidgetContainerMarketState
                                   ),
                                   TextButton(
                                       onPressed: () =>
+                                          state.deteleArchiveMarket(
+                                              context, widget.uidMarket),
+                                      child: Text(
+                                        'Удалить навсегда',
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
+                                      )),
+                                  TextButton(
+                                      onPressed: () =>
                                           state.removeArchiveMarket(
                                               context, widget.uidMarket),
                                       child: Text(
                                         AppLocalizations.of(context)
                                             .translate('h_def_restore'),
+                                        style: TextStyle(
+                                            color: Colors.red,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 17),
+                                      )),
+                                  TextButton(
+                                      onPressed: () {},
+                                      // state.removeArchiveMarket(
+                                      //     context, widget.uidMarket),
+                                      child: Text(
+                                        'Продлить',
                                         style: TextStyle(
                                             color: Colors.red,
                                             fontWeight: FontWeight.bold,

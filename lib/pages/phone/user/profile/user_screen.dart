@@ -100,7 +100,7 @@ class _UserScreenState extends State<UserScreen> {
                           backgroundColor: Colors.transparent,
                           expandedHeight: 100,
                           title: Text(
-                            userData.u_name,
+                            userData.name,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 color: Colors.black,

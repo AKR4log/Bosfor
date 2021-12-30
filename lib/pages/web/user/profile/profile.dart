@@ -186,8 +186,8 @@ class _WebProfilePageState extends State<WebProfilePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        userData.u_uri_avatars != null &&
-                                                userData.u_uri_avatars != ''
+                                        userData.uriImage != null &&
+                                                userData.uriImage != ''
                                             ? GestureDetector(
                                                 onTap: () => showGeneralDialog(
                                                     barrierDismissible: true,
@@ -233,7 +233,7 @@ class _WebProfilePageState extends State<WebProfilePage> {
                                                                                   width: double.infinity,
                                                                                   height: double.infinity,
                                                                                   child: CachedNetworkImage(
-                                                                                    imageUrl: userData.u_uri_avatars,
+                                                                                    imageUrl: userData.uriImage,
                                                                                     cacheManager: DefaultCacheManager(),
                                                                                     imageBuilder: (context, imageProvider) => Container(
                                                                                       decoration: BoxDecoration(
@@ -284,8 +284,8 @@ class _WebProfilePageState extends State<WebProfilePage> {
                                                     width: 75,
                                                     height: 75,
                                                     child: CachedNetworkImage(
-                                                      imageUrl: userData
-                                                          .u_uri_avatars,
+                                                      imageUrl:
+                                                          userData.uriImage,
                                                       cacheManager:
                                                           DefaultCacheManager(),
                                                       imageBuilder: (context,
@@ -329,14 +329,13 @@ class _WebProfilePageState extends State<WebProfilePage> {
                                                               40)),
                                                   child: Center(
                                                     child: Text(
-                                                        (userData.u_surname !=
-                                                                    ''
-                                                                ? userData.u_name[
+                                                        (userData.surname != ''
+                                                                ? userData.name[
                                                                         0] +
-                                                                    userData.u_surname[
+                                                                    userData.surname[
                                                                         0]
                                                                 : userData
-                                                                    .u_name[0])
+                                                                    .name[0])
                                                             .toUpperCase(),
                                                         style:
                                                             TextStyle(
@@ -386,7 +385,7 @@ class _WebProfilePageState extends State<WebProfilePage> {
                                           ),
                                           Container(
                                             child: Text(
-                                              userData.u_name,
+                                              userData.name,
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 22,

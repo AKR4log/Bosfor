@@ -178,8 +178,8 @@ class _WebEditProfileState extends State<WebEditProfile> {
                               child: Center(
                                 child: GestureDetector(
                                   onTap: () => getMultipleImageInfos(),
-                                  child: userData.u_uri_avatars != null &&
-                                          userData.u_uri_avatars != ''
+                                  child: userData.uriImage != null &&
+                                          userData.uriImage != ''
                                       ? ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(50),
@@ -187,7 +187,7 @@ class _WebEditProfileState extends State<WebEditProfile> {
                                             width: 75,
                                             height: 75,
                                             child: CachedNetworkImage(
-                                              imageUrl: userData.u_uri_avatars,
+                                              imageUrl: userData.uriImage,
                                               cacheManager:
                                                   DefaultCacheManager(),
                                               imageBuilder:
@@ -223,11 +223,11 @@ class _WebEditProfileState extends State<WebEditProfile> {
                                                     BorderRadius.circular(40)),
                                             child: Center(
                                               child: Text(
-                                                  (userData.u_surname != ''
-                                                          ? userData.u_name[0] +
+                                                  (userData.surname != ''
+                                                          ? userData.name[0] +
                                                               userData
-                                                                  .u_surname[0]
-                                                          : userData.u_name[0])
+                                                                  .surname[0]
+                                                          : userData.name[0])
                                                       .toUpperCase(),
                                                   style: TextStyle(
                                                       fontSize: 22,
@@ -258,9 +258,9 @@ class _WebEditProfileState extends State<WebEditProfile> {
                                         color: Colors.black.withOpacity(0.05),
                                         borderRadius: BorderRadius.circular(5)),
                                     child: textField(controllerName, false,
-                                        hint: userData.u_name +
+                                        hint: userData.name +
                                                 ' ' +
-                                                userData.u_surname ??
+                                                userData.surname ??
                                             '',
                                         isSide: true),
                                   ),

@@ -100,8 +100,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        userData.u_uri_avatars != null &&
-                                                userData.u_uri_avatars != ''
+                                        userData.uriImage != null &&
+                                                userData.uriImage != ''
                                             ? GestureDetector(
                                                 onTap: () => showGeneralDialog(
                                                     barrierDismissible: true,
@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                                   width: double.infinity,
                                                                                   height: double.infinity,
                                                                                   child: CachedNetworkImage(
-                                                                                    imageUrl: userData.u_uri_avatars,
+                                                                                    imageUrl: userData.uriImage,
                                                                                     cacheManager: DefaultCacheManager(),
                                                                                     imageBuilder: (context, imageProvider) => Container(
                                                                                       decoration: BoxDecoration(
@@ -198,8 +198,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     width: 75,
                                                     height: 75,
                                                     child: CachedNetworkImage(
-                                                      imageUrl: userData
-                                                          .u_uri_avatars,
+                                                      imageUrl:
+                                                          userData.uriImage,
                                                       cacheManager:
                                                           DefaultCacheManager(),
                                                       imageBuilder: (context,
@@ -243,14 +243,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               40)),
                                                   child: Center(
                                                     child: Text(
-                                                        (userData.u_surname !=
-                                                                    ''
-                                                                ? userData.u_name[
+                                                        (userData.surname != ''
+                                                                ? userData.name[
                                                                         0] +
-                                                                    userData.u_surname[
+                                                                    userData.surname[
                                                                         0]
                                                                 : userData
-                                                                    .u_name[0])
+                                                                    .name[0])
                                                             .toUpperCase(),
                                                         style:
                                                             TextStyle(
@@ -300,11 +299,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                           Container(
                                             child: Text(
-                                              userData.u_surname != null
-                                                  ? userData.u_surname +
+                                              userData.surname != null
+                                                  ? userData.surname +
                                                       ' ' +
-                                                      userData.u_name
-                                                  : userData.u_name,
+                                                      userData.name
+                                                  : userData.name,
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 22,
@@ -400,11 +399,29 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               TextButton(
                                   onPressed: () {
-                                    // Navigator.of(context)
-                                    //     .pushNamed('/ActiveApplications');
-                                    ScaffoldMessenger.of(context).showSnackBar(prug(
-                                        context,
-                                        'Данный экран требует рассмотрения от заказчика'));
+                                    Navigator.of(context)
+                                        .pushNamed('/CashProfile');
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Кошелёк',
+                                        style: TextStyle(
+                                            color: Colors.black, fontSize: 17),
+                                      ),
+                                      Icon(
+                                        Icons.chevron_right_rounded,
+                                        color: Colors.black,
+                                        size: 26,
+                                      )
+                                    ],
+                                  )),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushNamed('/SettingsPage');
                                   },
                                   child: Row(
                                     mainAxisAlignment:

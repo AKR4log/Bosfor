@@ -167,7 +167,8 @@ class _PropertyApplicationContainerState
                                               .addBookmarks(
                                                   context,
                                                   widget
-                                                      .application.uid_property)
+                                                      .application.uid_property,
+                                                  'property')
                                               .whenComplete(() {
                                               setState(() {
                                                 outbox = true;

@@ -283,7 +283,15 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                                     fontSize: 16),
                                               ),
                                               Text(
-                                                '₸${marketApplication.m_price}',
+                                                marketApplication
+                                                            .m_negotiated_price !=
+                                                        false
+                                                    ? 'Договорная цена'
+                                                    : marketApplication
+                                                                .m_will_give_free !=
+                                                            false
+                                                        ? 'Отдам даром'
+                                                        : '₸ ${marketApplication.m_price}',
                                                 style: TextStyle(
                                                     color: Colors.black,
                                                     fontWeight: FontWeight.bold,
@@ -393,12 +401,14 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                   Container(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 5),
-                                    child: Row(
+                                    child: Flex(
+                                      direction: Axis.horizontal,
                                       children: [
-                                        marketApplication.m_address != null
-                                            ? GestureDetector(
-                                                onTap: () {},
-                                                child: Container(
+                                        Flexible(
+                                          flex: 4,
+                                          child: marketApplication.m_address !=
+                                                  null
+                                              ? Container(
                                                   margin:
                                                       EdgeInsets.only(right: 5),
                                                   child: Text(
@@ -406,174 +416,41 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                   ),
-                                                ),
-                                              )
-                                            : SizedBox(),
-                                        marketApplication.m_region != null &&
-                                                marketApplication.m_address ==
-                                                    null
-                                            ? Container(
-                                                margin:
-                                                    EdgeInsets.only(right: 5),
-                                                child: Text(
-                                                  marketApplication.m_region,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                              )
-                                            : SizedBox(),
-                                        Text(
-                                          getChatTime(
-                                              context,
-                                              marketApplication
-                                                  .m_date_creation_application),
-                                          style: TextStyle(
-                                              color: Colors.grey[700],
-                                              fontSize: 12),
+                                                )
+                                              : SizedBox(),
+                                        ),
+                                        Flexible(
+                                          flex: 4,
+                                          child: marketApplication.m_region !=
+                                                      null &&
+                                                  marketApplication.m_address ==
+                                                      null
+                                              ? Container(
+                                                  margin:
+                                                      EdgeInsets.only(right: 5),
+                                                  child: Text(
+                                                    marketApplication.m_region,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                )
+                                              : SizedBox(),
+                                        ),
+                                        Flexible(
+                                          flex: 3,
+                                          child: Text(
+                                            getChatTime(
+                                                context,
+                                                marketApplication
+                                                    .m_date_creation_application),
+                                            style: TextStyle(
+                                                color: Colors.grey[700],
+                                                fontSize: 12),
+                                          ),
                                         )
                                       ],
                                     ),
                                   ),
-                                  verId
-                                      ? Column(
-                                          children: [
-                                            Container(
-                                              width: double.infinity,
-                                              height: 50,
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 5),
-                                              child: TextButton(
-                                                  style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(Color.fromRGBO(
-                                                                255,
-                                                                221,
-                                                                97,
-                                                                1)),
-                                                    shape: MaterialStateProperty
-                                                        .all<RoundedRectangleBorder>(
-                                                            RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                    )),
-                                                  ),
-                                                  onPressed: () {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(prug(
-                                                            context,
-                                                            'Данная технология требует рассмотрения от заказчика'));
-                                                  },
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 10),
-                                                        child: Text(
-                                                          'Покрасить объявление',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 15),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                          height: 30,
-                                                          width: 30,
-                                                          decoration: BoxDecoration(
-                                                              color: Colors
-                                                                  .white
-                                                                  .withOpacity(
-                                                                      0.40),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20)),
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons
-                                                                .invert_colors_rounded,
-                                                            size: 18,
-                                                            color: Colors.black,
-                                                          ))),
-                                                    ],
-                                                  )),
-                                            ),
-                                            Container(
-                                              width: double.infinity,
-                                              height: 50,
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 10, vertical: 5),
-                                              child: TextButton(
-                                                  style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(Color.fromRGBO(
-                                                                255,
-                                                                221,
-                                                                97,
-                                                                1)),
-                                                    shape: MaterialStateProperty
-                                                        .all<RoundedRectangleBorder>(
-                                                            RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              25),
-                                                    )),
-                                                  ),
-                                                  onPressed: () {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(prug(
-                                                            context,
-                                                            'Данная технология требует рассмотрения от заказчика'));
-                                                  },
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            left: 10),
-                                                        child: Text(
-                                                          'Продвигать',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 15),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                          height: 30,
-                                                          width: 30,
-                                                          decoration: BoxDecoration(
-                                                              color: Colors
-                                                                  .white
-                                                                  .withOpacity(
-                                                                      0.40),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20)),
-                                                          child: Center(
-                                                              child: Icon(
-                                                            Icons
-                                                                .trending_up_rounded,
-                                                            size: 18,
-                                                            color: Colors.black,
-                                                          ))),
-                                                    ],
-                                                  )),
-                                            ),
-                                          ],
-                                        )
-                                      : SizedBox(),
                                   Container(
                                     margin: EdgeInsets.symmetric(
                                         horizontal: 15, vertical: 5),
@@ -614,7 +491,7 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                                               .spaceAround,
                                                       children: [
                                                         Text(
-                                                          userData.u_name,
+                                                          userData.name,
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               color:
@@ -629,9 +506,8 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                                       ],
                                                     ),
                                                   ),
-                                                  userData.u_uri_avatars !=
-                                                              null &&
-                                                          userData.u_uri_avatars !=
+                                                  userData.uriImage != null &&
+                                                          userData.uriImage !=
                                                               ''
                                                       ? ClipRRect(
                                                           borderRadius:
@@ -643,7 +519,7 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                                             child:
                                                                 CachedNetworkImage(
                                                               imageUrl: userData
-                                                                  .u_uri_avatars,
+                                                                  .uriImage,
                                                               cacheManager:
                                                                   DefaultCacheManager(),
                                                               imageBuilder:
@@ -695,11 +571,11 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                                                             40)),
                                                             child: Center(
                                                               child: Text(
-                                                                  (userData.u_surname != ''
-                                                                          ? userData.u_name[0] +
-                                                                              userData.u_surname[
+                                                                  (userData.surname != ''
+                                                                          ? userData.name[0] +
+                                                                              userData.surname[
                                                                                   0]
-                                                                          : userData.u_name[
+                                                                          : userData.name[
                                                                               0])
                                                                       .toUpperCase(),
                                                                   style: TextStyle(
@@ -721,6 +597,39 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                           return Container();
                                         }
                                       }),
+                                  TextButton(
+                                    onPressed: () => Navigator.of(context)
+                                        .pushNamed('/ListFollowingMarket/' +
+                                            marketApplication
+                                                .m_uid_application),
+                                    child: Container(
+                                      width: double.infinity,
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 10),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Ваше обьявление понравилось',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            'Показать кому',
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.black),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                   Container(
                                     padding: EdgeInsets.only(
                                         bottom: 5, left: 15, right: 15, top: 5),
@@ -1089,6 +998,14 @@ class _WidgetContainerMarketState extends State<WidgetContainerMarket> {
                                   //     ],
                                   //   ),
                                   // )
+                                  TextButton(
+                                    child: Text(
+                                      'Вопрос/Ответ',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 18),
+                                    ),
+                                    onPressed: () {},
+                                  )
                                 ],
                               ),
                             ),

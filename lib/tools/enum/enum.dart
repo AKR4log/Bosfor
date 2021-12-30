@@ -8,3 +8,9 @@ enum AuthStatus {
   LOGGED_IN,
 }
 enum PlayerState { stopped, playing, paused }
+enum SupportState {
+  on,
+  unknown,
+  supported,
+  unsupported,
+}

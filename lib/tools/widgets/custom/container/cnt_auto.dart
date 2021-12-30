@@ -171,7 +171,8 @@ class _CNTAutoState extends State<CNTAuto> {
                                               .addBookmarks(
                                                   context,
                                                   widget.application
-                                                      .a_uid_application)
+                                                      .a_uid_application,
+                                                  'auto')
                                               .whenComplete(() {
                                               setState(() {
                                                 outbox = true;

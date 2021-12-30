@@ -6,7 +6,8 @@ import 'package:kz/tools/widgets/custom/container/bookmarks_container.dart';
 import 'package:provider/provider.dart';
 
 class ListBookmarksApplications extends StatefulWidget {
-  ListBookmarksApplications({Key key}) : super(key: key);
+  final bool payContainer;
+  ListBookmarksApplications({Key key, this.payContainer}) : super(key: key);
 
   @override
   _ListBookmarksApplicationsState createState() =>
@@ -54,7 +55,8 @@ class _ListBookmarksApplicationsState extends State<ListBookmarksApplications> {
             itemCount: bookmarksApplicatinos.length,
             itemBuilder: (context, index) {
               return BookmarksApplicationContainer(
-                  bookmarksApplicatinos: bookmarksApplicatinos[index]);
+                bookmarksApplicatinos: bookmarksApplicatinos[index],
+              );
             },
           );
   }

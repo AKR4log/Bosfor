@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kz/app_localizations.dart';
+import 'package:kz/tools/constant/name_category.dart';
 import 'package:kz/tools/widgets/custom/container/button_shopping_service.dart';
 
 class CreationApplication extends StatefulWidget {
@@ -112,7 +113,7 @@ class _CreationApplicationState extends State<CreationApplication> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
                             child: Text(
-                              AppLocalizations.of(context).translate('h_auto'),
+                              AppLocalizations.of(context).translate('auto'),
                               style:
                                   TextStyle(fontSize: 18, color: Colors.black),
                             ),
@@ -146,8 +147,7 @@ class _CreationApplicationState extends State<CreationApplication> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
                             child: Text(
-                              AppLocalizations.of(context)
-                                  .translate('h_property'),
+                              AppLocalizations.of(context).translate('domain'),
                               style:
                                   TextStyle(fontSize: 18, color: Colors.black),
                             ),
@@ -156,37 +156,6 @@ class _CreationApplicationState extends State<CreationApplication> {
                       ),
                     ),
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
-                  //   child: Column(
-                  //     children: [
-                  //       Container(
-                  //         margin: EdgeInsets.only(bottom: 15),
-                  //         width: double.infinity,
-                  //         child: Text(
-                  //           'Сервисы',
-                  //           style: TextStyle(
-                  //               color: Colors.black.withOpacity(0.7),
-                  //               fontSize: 20),
-                  //         ),
-                  //       ),
-                  //       TextButton(
-                  //         onPressed: () {
-                  //           print('hello');
-                  //         },
-                  //         child: button_shop_service('Покрасить объявление',
-                  //             Icons.monochrome_photos_rounded),
-                  //       ),
-                  //       TextButton(
-                  //         onPressed: () {
-                  //           print('hello');
-                  //         },
-                  //         child: button_shop_service('Поднять в списке',
-                  //             Icons.auto_fix_high_rounded),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // )
                 ],
               ),
             ),

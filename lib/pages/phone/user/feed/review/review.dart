@@ -83,15 +83,15 @@ class _ReviewContainerState extends State<ReviewContainer> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              userData.u_uri_avatars != null &&
-                                      userData.u_uri_avatars != ''
+                              userData.uriImage != null &&
+                                      userData.uriImage != ''
                                   ? ClipRRect(
                                       borderRadius: BorderRadius.circular(45),
                                       child: Container(
                                         width: 35,
                                         height: 35,
                                         child: CachedNetworkImage(
-                                          imageUrl: userData.u_uri_avatars,
+                                          imageUrl: userData.uriImage,
                                           cacheManager: DefaultCacheManager(),
                                           imageBuilder:
                                               (context, imageProvider) =>
@@ -125,10 +125,10 @@ class _ReviewContainerState extends State<ReviewContainer> {
                                                 BorderRadius.circular(40)),
                                         child: Center(
                                           child: Text(
-                                              (userData.u_surname != ''
-                                                      ? userData.u_name[0] +
-                                                          userData.u_surname[0]
-                                                      : userData.u_name[0])
+                                              (userData.surname != ''
+                                                      ? userData.name[0] +
+                                                          userData.surname[0]
+                                                      : userData.name[0])
                                                   .toUpperCase(),
                                               style: TextStyle(
                                                   fontSize: 22,
@@ -140,7 +140,7 @@ class _ReviewContainerState extends State<ReviewContainer> {
                               Container(
                                 margin: EdgeInsets.only(left: 10),
                                 child: Text(
-                                  userData.u_name,
+                                  userData.name,
                                   style: TextStyle(
                                       fontSize: 13, color: Colors.black),
                                 ),

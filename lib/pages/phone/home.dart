@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -38,55 +39,55 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // FirebaseMessaging.instance
-    //     .getInitialMessage()
-    //     .then((RemoteMessage message) {
-    //   if (message != null) {
-    //     print('Remote ' + message.toString());
-    //     // Navigator.pushNamed(context, '/message',
-    //     //     arguments: MessageArguments(message, true));
-    //   }
-    // });
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage message) {
+      if (message != null) {
+        print('Remote ' + message.toString());
+        // Navigator.pushNamed(context, '/message',
+        //     arguments: MessageArguments(message, true));
+      }
+    });
 
-    // FirebaseMessaging.instance
-    //     .subscribeToTopic('${FirebaseAuth.instance.currentUser.uid}');
+    FirebaseMessaging.instance
+        .subscribeToTopic('${FirebaseAuth.instance.currentUser.uid}');
 
-    // FirebaseMessaging.instance.getToken().then((token) {
-    //   print('token: $token');
-    //   FirebaseFirestore.instance
-    //       .collection('users')
-    //       .doc(FirebaseAuth.instance.currentUser.uid)
-    //       .update({'pushToken': token});
-    // }).catchError((err) {
-    //   print(err.message.toString());
-    // });
+    FirebaseMessaging.instance.getToken().then((token) {
+      print('token: $token');
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser.uid)
+          .update({'pushToken': token});
+    }).catchError((err) {
+      print(err.message.toString());
+    });
 
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-    //   RemoteNotification notification = message.notification;
-    //   AndroidNotification android = message.notification?.android;
-    //   if (notification != null && android != null) {
-    //     flutterLocalNotificationsPlugin.show(
-    //       notification.hashCode,
-    //       notification.title,
-    //       notification.body,
-    //       NotificationDetails(
-    //         android: AndroidNotificationDetails(
-    //           'bosfor',
-    //           'com.bosfor.kz',
-    //           'com.bosfor.kzss',
-    //           icon: 'push_notification',
-    //           priority: Priority.high,
-    //         ),
-    //       ),
-    //     );
-    //   }
-    // });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      RemoteNotification notification = message.notification;
+      AndroidNotification android = message.notification?.android;
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              'bosfor',
+              'com.bosfor.kz',
+              'com.bosfor.kzss',
+              icon: 'push_notification',
+              priority: Priority.high,
+            ),
+          ),
+        );
+      }
+    });
 
-    // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    //   print('A new onMessageOpenedApp event was published!');
-    //   // Navigator.pushNamed(context, '/message',
-    //   //     arguments: MessageArguments(message, true));
-    // });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+      // Navigator.pushNamed(context, '/message',
+      //     arguments: MessageArguments(message, true));
+    });
   }
 
   Widget _getPage(int index) {

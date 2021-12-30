@@ -1,13 +1,17 @@
+// ignore_for_file: unused_field
+
 import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kz/pages/web/user/home/home_page.dart';
 import 'package:kz/pages/web/user/profile/profile.dart';
 import 'package:kz/tools/enum/enum.dart';
 import 'package:kz/tools/state/app_state.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -15,6 +19,9 @@ class CloudFirestore extends AppState {
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   ConfirmationResult confirmationResult;
+  final LocalAuthentication auth = LocalAuthentication();
+  SupportState _supportState = SupportState.unknown;
+  bool canCheckBiometrics;
   User user;
 
   /// Вход по номеру телефона v.1
@@ -51,9 +58,24 @@ class CloudFirestore extends AppState {
     signInWithCredential(authCredential, context);
   }
 
+  Future<bool> onLocalAuth() async {
+    _supportState = SupportState.on;
+    return await auth
+        .authenticate(
+            localizedReason: 'Please authenticate to show account',
+            useErrorDialogs: true,
+            stickyAuth: true,
+            biometricOnly: true)
+        .whenComplete(() => _supportState = SupportState.supported);
+  }
+
   Future<User> getCurrentUser({context}) async {
     try {
       await Firebase.initializeApp();
+      if (_supportState == SupportState.on) {
+        onLocalAuth();
+        print(_supportState);
+      }
       loading = true;
       user = _firebaseAuth.currentUser;
       if (user != null) {
@@ -233,9 +255,9 @@ class CloudFirestore extends AppState {
     return;
   }
 
-  Future<void> createAutoApplication(
-      BuildContext context, List<Uint8List> listURL,
+  Future<void> createAutoApplication(BuildContext context,
       {String mValAuto,
+      List<Uint8List> listURL,
       mNameCars,
       mNameModelCars,
       dValAuto,
@@ -246,6 +268,13 @@ class CloudFirestore extends AppState {
       photo_1,
       photo_2,
       photo_3,
+      rent_auto_term_val,
+      rent_auto_payment_val,
+      rent_auto_an_initial_fee_val,
+      rent_auto_contract_val,
+      rent_auto_casco_insurance_val,
+      valCondition,
+      controllerPriceForTerm,
       photo_4,
       photo_5,
       youtube,
@@ -282,12 +311,19 @@ class CloudFirestore extends AppState {
       "photo_4": photo_4 ?? null,
       "photo_5": photo_5 ?? null,
       "a_desc": a_desc ?? null,
+      "rent_auto_term_val": rent_auto_term_val ?? null,
+      "valCondition": valCondition ?? null,
+      "rent_auto_payment_val": rent_auto_payment_val ?? null,
+      "rent_auto_an_initial_fee_val": rent_auto_an_initial_fee_val ?? null,
+      "rent_auto_contract_val": rent_auto_contract_val ?? null,
+      "rent_auto_casco_insurance_val": rent_auto_casco_insurance_val ?? null,
+      "controllerPriceForTerm": controllerPriceForTerm ?? null,
       "a_head": a_head ?? null,
       "youtube": youtube ?? null,
       "listURL": listURL ?? null,
-      "a_mValCarBody": 'h_m_' + mValCarBody ?? null,
-      "a_mValDriveAuto": 'h_m_' + mValDriveAuto ?? null,
-      "a_mValGearboxBox": 'h_m_' + mValGearboxBox ?? null,
+      "a_mValCarBody": 'h_m_$mValCarBody' ?? null,
+      "a_mValDriveAuto": 'h_m_$mValDriveAuto' ?? null,
+      "a_mValGearboxBox": 'h_m_$mValGearboxBox' ?? null,
       "a_yearOfIssue": yearOfIssue ?? null,
       "a_engineVolume": engineVolume ?? null,
       "a_mileage": mileage ?? null,
@@ -399,12 +435,22 @@ class CloudFirestore extends AppState {
   Future<void> addBookmarks(
     BuildContext context,
     String uidApplications,
+    String dbname,
   ) async {
     await Firebase.initializeApp();
     String uid = FirebaseAuth.instance.currentUser.uid;
     CollectionReference ref = FirebaseFirestore.instance.collection("users");
     ref.doc(uid).collection('bookmarks').doc(uidApplications).set({
       "uidApplications": uidApplications,
+      "dateCreations": DateTime.now().toUtc().toString(),
+    });
+    CollectionReference refApp = FirebaseFirestore.instance.collection(dbname);
+    refApp
+        .doc(uidApplications)
+        .collection('notification')
+        .doc(uidApplications)
+        .set({
+      "uid": uid,
       "dateCreations": DateTime.now().toUtc().toString(),
     });
     return;
@@ -464,6 +510,19 @@ class CloudFirestore extends AppState {
     return;
   }
 
+  Future<void> deteleArchiveMarket(
+    BuildContext context,
+    String uidApplication,
+  ) async {
+    await Firebase.initializeApp();
+    String uid = FirebaseAuth.instance.currentUser.uid;
+    CollectionReference ref = FirebaseFirestore.instance.collection("users");
+    CollectionReference refT = FirebaseFirestore.instance.collection("market");
+    refT.doc(uidApplication).delete();
+    ref.doc(uid).collection('archive').doc(uidApplication).delete();
+    return;
+  }
+
   Future<void> deteleBookmarks(
     BuildContext context,
     String uidApplications,
@@ -487,6 +546,18 @@ class CloudFirestore extends AppState {
       "uidUser": uid,
       "uidLikedApplication": randomName,
       "dateCreations": DateTime.now().toUtc().toString(),
+    });
+    return;
+  }
+
+  Future<void> editPrice(
+      BuildContext context, String uidApplication, String newprice,
+      {String dbname}) async {
+    await Firebase.initializeApp();
+    CollectionReference ref = FirebaseFirestore.instance.collection(dbname);
+    ref.doc(uidApplication).update({
+      'edit_dt': DateTime.now().toUtc().toString(),
+      'm_price': newprice,
     });
     return;
   }

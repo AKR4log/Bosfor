@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:kz/app_localizations.dart';
 import 'package:kz/tools/constant/name_category.dart';
 import 'package:kz/tools/database/database.dart';
@@ -14,7 +12,6 @@ import 'package:kz/tools/functions/for_cusSmootPageIndicator.dart';
 import 'package:kz/tools/functions/uploadedPhotoApp.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:kz/tools/widgets/custom/checkbox/custom_checkbox.dart';
-import 'package:kz/tools/widgets/custom/container/containers_custom.dart';
 import 'package:kz/tools/widgets/custom/textfield/textFieldCustom.dart';
 import 'package:kz/tools/widgets/supporting/customSmoothPageIndicator.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -88,8 +85,6 @@ class _CRTPropertyState extends State<CRTProperty> {
       isInDorm = false,
       hidePhone = false;
   Address _address;
-  LocationPermission permission;
-  StreamSubscription<Position> _positionStream;
   TextEditingController cntrllrMrktPriceApp;
   TextEditingController cntrllrHeadApp;
   TextEditingController cntrllrDescApp;
@@ -163,52 +158,6 @@ class _CRTPropertyState extends State<CRTProperty> {
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     return addresses.first;
-  }
-
-  getCurrentLocation() async {
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.deniedForever) {
-        return Future.error(
-            'Location permissions are permanently denied, we cannot request permissions.');
-      }
-
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    setState(() {
-      getAddress = true;
-    });
-    _positionStream = Geolocator.getPositionStream(
-            desiredAccuracy: LocationAccuracy.high, distanceFilter: 10)
-        .listen((Position position) {
-      setState(() {
-        dataLongitude = position.longitude;
-        dataLatitude = position.latitude;
-      });
-      final coordinates = Coordinates(position.latitude, position.longitude);
-      getAddressbaseOnLocation(coordinates: coordinates).then((value) {
-        _address = value;
-        final snackBar = SnackBar(
-          behavior: SnackBarBehavior.floating,
-          content: Text("Ваше местоположение найдено"),
-          backgroundColor: Colors.greenAccent[700],
-        );
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-        setState(() {
-          getAddress = false;
-          _positionStream.cancel();
-        });
-      });
-    });
   }
 
   _fetchAssets() async {
@@ -2043,8 +1992,8 @@ class _CRTPropertyState extends State<CRTProperty> {
                     p_country_city: cntrllrCountryCity.text.trim() ?? null,
                     p_crossing: cntrllrCrossing.text.trim() ?? null,
                     p_door: door ?? null,
-                    p_desc: cntrllrDescApp.text.trim()??null,
-                    p_head: cntrllrHeadApp.text.trim()??null,
+                    p_desc: cntrllrDescApp.text.trim() ?? null,
+                    p_head: cntrllrHeadApp.text.trim() ?? null,
                     p_floor: floor ?? null,
                     p_floor_end: cntrllrFloorEnd.text.trim() ?? null,
                     p_floor_start: cntrllrFloorStart.text.trim() ?? null,

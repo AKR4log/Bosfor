@@ -71,13 +71,12 @@ class _FeedPageState extends State<FeedPage> {
                         ),
                         Tab(
                           child: Text(
-                            AppLocalizations.of(context).translate('h_auto'),
+                            AppLocalizations.of(context).translate('auto'),
                           ),
                         ),
                         Tab(
                           child: Text(
-                            AppLocalizations.of(context)
-                                .translate('h_property'),
+                            AppLocalizations.of(context).translate('domain'),
                           ),
                         ),
                       ],

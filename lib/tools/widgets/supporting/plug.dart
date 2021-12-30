@@ -7,12 +7,12 @@ Widget prug(
   return SnackBar(
     behavior: SnackBarBehavior.floating,
     content: Text(label),
-    action: SnackBarAction(
-      label: 'Посмотреть',
-      onPressed: () {
-        Navigator.pushNamed(context, "/PlugScreen");
-      },
-    ),
+    // action: SnackBarAction(
+    //   label: 'Посмотреть',
+    //   onPressed: () {
+    //     Navigator.pushNamed(context, "/PlugScreen");
+    //   },
+    // ),
   );
 }
 

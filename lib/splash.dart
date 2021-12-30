@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:kz/pages/phone/home.dart';
 import 'package:kz/pages/phone/starting/start.dart';
 import 'package:kz/pages/web/auth/loging/login_page.dart';
 import 'package:kz/pages/web/user/home/home_page.dart';
 import 'package:kz/tools/database/database.dart';
 import 'package:kz/tools/enum/enum.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -17,6 +19,13 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final LocalAuthentication auth = LocalAuthentication();
+  SupportState _supportState = SupportState.unknown;
+  bool _canCheckBiometrics;
+  List<BiometricType> _availableBiometrics;
+  String _authorized = 'Not Authorized';
+  bool _isAuthenticating = false;
+
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       timer();
@@ -25,7 +34,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void timer() async {
-    Future.delayed(Duration(seconds: 1)).then((_) {
+    Future.delayed(Duration(seconds: 1)).then((_) async {
       var state = Provider.of<CloudFirestore>(context, listen: false);
       state.getCurrentUser(context: context);
     });
@@ -67,7 +76,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     var state = Provider.of<CloudFirestore>(context);
-    print(state.authStatus);
     return kIsWeb
         ? Scaffold(
             backgroundColor: Colors.white,

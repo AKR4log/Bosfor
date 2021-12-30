@@ -3,19 +3,24 @@ import 'package:kz/pages/phone/starting/loging/codes/confirm_code.dart';
 import 'package:kz/pages/phone/starting/loging/login_page.dart';
 import 'package:kz/pages/phone/starting/loging/register_page.dart';
 import 'package:kz/pages/phone/home.dart';
+import 'package:kz/pages/phone/user/creation/auto/auto.dart';
 import 'package:kz/pages/phone/user/creation/auto/crt_auto.dart';
-import 'package:kz/pages/phone/user/creation/market/crt_market.dart';
+import 'package:kz/pages/phone/user/creation/market/market.dart';
 import 'package:kz/pages/phone/user/creation/property/crt_property.dart';
+import 'package:kz/pages/phone/user/feed/market/widget/edit/edit_photo.dart';
 import 'package:kz/pages/phone/user/feed/market/widget/edit/edit_screen.dart';
+import 'package:kz/pages/phone/user/feed/market/widget/following/screen.dart';
 import 'package:kz/pages/phone/user/feed/market/widget/widget_screen_market.dart';
 import 'package:kz/pages/phone/user/feed/property/widget/screen_property.dart';
 import 'package:kz/pages/phone/user/feed/transport/widget/screen_auto.dart';
 import 'package:kz/pages/phone/user/profile/active_applications/active_list_applications.dart';
 import 'package:kz/pages/phone/user/profile/archive/archive_list.dart';
 import 'package:kz/pages/phone/user/profile/archive/widgets/screen.dart';
+import 'package:kz/pages/phone/user/profile/cash/cash_profile.dart';
 import 'package:kz/pages/phone/user/profile/edit_profile/edit_lang/edits_lang.dart';
 import 'package:kz/pages/phone/user/profile/edit_profile/edit_profile.dart';
 import 'package:kz/pages/phone/user/profile/profile.dart';
+import 'package:kz/pages/phone/user/profile/settings/settings.dart';
 import 'package:kz/pages/phone/user/profile/user_screen.dart';
 import 'package:kz/splash.dart';
 import 'package:kz/tools/routes/custom_routes.dart';
@@ -54,6 +59,9 @@ class Routes {
             builder: (BuildContext context) => RegisterPage());
       case "HomePage":
         return CustomRoute<bool>(builder: (BuildContext context) => HomePage());
+      case "SettingsPage":
+        return CustomRoute<bool>(
+            builder: (BuildContext context) => SettingsPage());
       case "ProfilePage":
         String profileId = pathElements[2];
         return SlideLeftRoute<bool>(
@@ -96,15 +104,32 @@ class Routes {
             builder: (BuildContext context) => UserScreen(
                   profileId: profileId,
                 ));
+      case "ListFollowingMarket":
+        String uidApp = pathElements[2];
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => ListFollowingMarket(
+                  uidApp: uidApp,
+                ));
+
+      case "EditPhoto":
+        String uidApp = pathElements[2];
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => EditPhoto(
+                  uid: uidApp,
+                ));
+
+      case "CashProfile":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => CashProfile());
       case "CreationMarket":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => CRTMarket());
+            builder: (BuildContext context) => MarketMaster());
       case "CreationProperty":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => CRTProperty());
       case "CreationAuto":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => CRTAuto());
+            builder: (BuildContext context) => AutoMaster());
       case "ActiveApplications":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => ActiveApplicationsAuthUser());

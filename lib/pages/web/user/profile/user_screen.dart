@@ -1,3 +1,5 @@
+// ignore_for_file: missing_return
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kz/app_localizations.dart';
@@ -99,7 +101,7 @@ class _UserScreenState extends State<UserScreen> {
                                 child: Row(
                               children: [
                                 Text(
-                                  userData.u_name,
+                                  userData.name,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 28),
@@ -108,7 +110,7 @@ class _UserScreenState extends State<UserScreen> {
                                   width: 5,
                                 ),
                                 Text(
-                                  userData.u_surname,
+                                  userData.surname,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 28),
@@ -125,7 +127,7 @@ class _UserScreenState extends State<UserScreen> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15),
                                 ),
-                                Text(userData.u_phone_number),
+                                Text(userData.phoneNumber),
                               ],
                             )),
                           ],

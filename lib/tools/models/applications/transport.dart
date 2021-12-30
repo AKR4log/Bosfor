@@ -17,6 +17,13 @@ class TransportApplication {
   String a_mValGearboxBox;
   String photo_1;
   String photo_2;
+  String rent_auto_term_val;
+  String rent_auto_payment_val;
+  String rent_auto_an_initial_fee_val;
+  String rent_auto_contract_val;
+  String rent_auto_casco_insurance_val;
+  String valCondition;
+  String controllerPriceForTerm;
   String photo_3;
   String photo_4;
   String photo_5;
@@ -63,5 +70,12 @@ class TransportApplication {
     this.a_region,
     this.a_desc,
     this.a_head,
+    this.controllerPriceForTerm,
+    this.rent_auto_an_initial_fee_val,
+    this.rent_auto_casco_insurance_val,
+    this.rent_auto_contract_val,
+    this.rent_auto_payment_val,
+    this.rent_auto_term_val,
+    this.valCondition,
   });
 }

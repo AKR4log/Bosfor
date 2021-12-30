@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:kz/app_localizations.dart';
-import 'package:kz/pages/phone/user/bookmarks/list_bookmarks/list_bookmarks.dart';
-import 'package:kz/tools/models/applications/bookmarks.dart';
+import 'package:kz/pages/phone/user/feed/market/widget/following/list.dart';
+import 'package:kz/tools/models/applications/liked.dart';
+import 'package:kz/tools/models/applications/market.dart';
+import 'package:kz/tools/models/user/user.dart';
 import 'package:kz/tools/state/feed_state.dart';
 import 'package:provider/provider.dart';
 
-class BookmarksPage extends StatefulWidget {
-  BookmarksPage({Key key, GlobalKey<ScaffoldState> scaffoldKey})
-      : super(key: key);
+class ListFollowingMarket extends StatefulWidget {
+  final String uidApp;
+  ListFollowingMarket({Key key, this.uidApp}) : super(key: key);
 
   @override
-  _BookmarksPageState createState() => _BookmarksPageState();
+  _ListFollowingMarketState createState() => _ListFollowingMarketState();
 }
 
-class _BookmarksPageState extends State<BookmarksPage> {
+class _ListFollowingMarketState extends State<ListFollowingMarket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: NestedScrollView(
+      backgroundColor: Colors.white,
+      body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               SliverOverlapAbsorber(
@@ -29,7 +30,9 @@ class _BookmarksPageState extends State<BookmarksPage> {
                   sliver: SliverAppBar(
                     backgroundColor: Colors.transparent,
                     expandedHeight: 100,
-                    automaticallyImplyLeading: false,
+                    leading: BackButton(
+                      color: Colors.black,
+                    ),
                     elevation: 0,
                     flexibleSpace: Align(
                       alignment: Alignment.bottomLeft,
@@ -40,17 +43,13 @@ class _BookmarksPageState extends State<BookmarksPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              AppLocalizations.of(context)
-                                  .translate('h_bookmarks'),
+                              'Кому понравилось',
                               style: TextStyle(
                                   color: Colors.black87,
                                   fontSize: 25,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Comfortaa"),
                             ),
-                            IconButton(
-                                onPressed: () {},
-                                icon: Icon(Icons.trending_up_outlined))
                           ],
                         ),
                       ),
@@ -60,18 +59,12 @@ class _BookmarksPageState extends State<BookmarksPage> {
               ),
             ];
           },
-          body: SafeArea(
-            top: false,
-            bottom: false,
-            child: Builder(
-              builder: (BuildContext context) {
-                return StreamProvider<List<BookmarksApplications>>.value(
-                  value: FeedState().allBookmarksApplications,
-                  child: ListBookmarksApplications(),
-                );
-              },
-            ),
-          ),
-        ));
+          body: SingleChildScrollView(
+              child: StreamProvider<List<Liked>>.value(
+            value:
+                FeedState(uidApplicationMarket: widget.uidApp).followingMarket,
+            child: ContainerListFollowingMarket(),
+          ))),
+    );
   }
 }

@@ -30,7 +30,7 @@ class _ContainerElevetationState extends State<ContainerElevetation> {
         .then((snapshot) {
       if (snapshot.data() != null) {
         setState(() {
-          m_photo = snapshot.get('m_photo');
+          m_photo = snapshot.get('photo_1');
           m_address = snapshot.get('m_address');
           m_region = snapshot.get('m_region');
           m_price = snapshot.get('m_price');
@@ -47,7 +47,7 @@ class _ContainerElevetationState extends State<ContainerElevetation> {
         .then((snapshot) {
       if (snapshot.data() != null) {
         setState(() {
-          m_photo = snapshot.get('m_photo');
+          m_photo = snapshot.get('p_photo_1');
           m_address = snapshot.get('m_address');
           m_region = snapshot.get('m_region');
           m_price = snapshot.get('m_price');
@@ -64,7 +64,7 @@ class _ContainerElevetationState extends State<ContainerElevetation> {
         .then((snapshot) {
       if (snapshot.data() != null) {
         setState(() {
-          m_photo = snapshot.get('m_photo');
+          m_photo = snapshot.get('m_photo_1');
           m_address = snapshot.get('m_address');
           m_region = snapshot.get('m_region');
           m_price = snapshot.get('m_price');
@@ -129,8 +129,8 @@ class _ContainerElevetationState extends State<ContainerElevetation> {
                             m_negotiated_price
                                 ? 'Договорная цена'
                                 : m_will_give_free
-                                ? 'Отдам даром'
-                                : '₸${m_price ?? ''}',
+                                    ? 'Отдам даром'
+                                    : '₸${m_price ?? ''}',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 12),
@@ -149,8 +149,8 @@ class _ContainerElevetationState extends State<ContainerElevetation> {
                             m_address != ''
                                 ? m_address ?? ''
                                 : m_region != ''
-                                ? m_region ?? ''
-                                : 'Не определенно',
+                                    ? m_region ?? ''
+                                    : 'Не определенно',
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 10, fontWeight: FontWeight.w400),

@@ -661,7 +661,7 @@ class _WidgetContainerAutoState extends State<WidgetContainerAuto> {
                                                               .spaceAround,
                                                       children: [
                                                         Text(
-                                                          userData.u_name,
+                                                          userData.name,
                                                           style: TextStyle(
                                                               fontSize: 18,
                                                               color:
@@ -676,9 +676,8 @@ class _WidgetContainerAutoState extends State<WidgetContainerAuto> {
                                                       ],
                                                     ),
                                                   ),
-                                                  userData.u_uri_avatars !=
-                                                              null &&
-                                                          userData.u_uri_avatars !=
+                                                  userData.uriImage != null &&
+                                                          userData.uriImage !=
                                                               ''
                                                       ? ClipRRect(
                                                           borderRadius:
@@ -690,7 +689,7 @@ class _WidgetContainerAutoState extends State<WidgetContainerAuto> {
                                                             child:
                                                                 CachedNetworkImage(
                                                               imageUrl: userData
-                                                                  .u_uri_avatars,
+                                                                  .uriImage,
                                                               cacheManager:
                                                                   DefaultCacheManager(),
                                                               imageBuilder:
@@ -742,11 +741,11 @@ class _WidgetContainerAutoState extends State<WidgetContainerAuto> {
                                                                             40)),
                                                             child: Center(
                                                               child: Text(
-                                                                  (userData.u_surname != ''
-                                                                          ? userData.u_name[0] +
-                                                                              userData.u_surname[
+                                                                  (userData.surname != ''
+                                                                          ? userData.name[0] +
+                                                                              userData.surname[
                                                                                   0]
-                                                                          : userData.u_name[
+                                                                          : userData.name[
                                                                               0])
                                                                       .toUpperCase(),
                                                                   style: TextStyle(
